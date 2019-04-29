@@ -1,4 +1,5 @@
 var items = [];
+var galleryGrid;
 
 /**
  * Loads the items
@@ -45,12 +46,20 @@ function newItem() {
     saveItems();
 }
 
+function displayItems() {
+    
+}
+
 /**
  * Inits the Speical Gallery
  */
 function init() {
     loadItems();
     jQuery('#new-item').click(newItem);
+
+    galleryGrid = new Muuri('.gallery-grid', {
+        'dragEnabled': true
+    });
 }
 
 jQuery(document).ready(init);

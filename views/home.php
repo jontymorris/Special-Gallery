@@ -2,40 +2,34 @@
     <button class="button" id="new-item">New item</button>
 </div>
 
-<div id="gallery-items">
-    <div class="image">
-        
+<div class="gallery-grid">
+
+  <div class="item">
+    <div class="item-content">
+      <!-- Safe zone, enter your custom markup -->
+      This can be anything.
+      <!-- Safe zone ends -->
     </div>
-    <div class="image">
-        
+  </div>
+
+  <div class="item">
+    <div class="item-content">
+      <!-- Safe zone, enter your custom markup -->
+      <div class="my-custom-content">
+        Yippee!
+      </div>
+      <!-- Safe zone ends -->
     </div>
-    <div class="image">
-        
-    </div>
-    <div class="image">
-        
-    </div>
-    <div class="image">
-        
-    </div>
-    <div class="image">
-        
-    </div>
-    <div class="image">
-        
-    </div>
+  </div>
+
 </div>
 
-
-<!-- Example -->
-<!--
-<p>
-    <input type="number" value="" class="regular-text process_custom_images" id="process_custom_images" name="" max="" min="1" step="1">
-    <button class="set_custom_images button">Choose image</button>
-</p>
-<img id="my-image">
--->
-
-<!-- Scripts and CSS --->
+<!-- CSS --->
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/gallery.css' ) ?>">
+
+<!-- Scripts --->
+<script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script>
+<script src="https://unpkg.com/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://unpkg.com/muuri@0.7.1/dist/muuri.min.js"></script>
+
 <script src="<?php echo plugins_url( 'special-gallery/js/gallery.js' ) ?>"></script>
