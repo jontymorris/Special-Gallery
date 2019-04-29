@@ -1,0 +1,15 @@
+#gallery-options {
+    padding: 10px 0px 10px 0px;
+}
+
+#gallery-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    background-color: #202020;
+    grid-gap: 10px;
+}
+
+.image {
+    background-color: #585858;
+    min-height: 200px;
+}
