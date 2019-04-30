@@ -1,5 +1,7 @@
 var items = [];
+
 var galleryGrid;
+var itemGrid;
 
 var mouseClick;
 var mouseDragging;
@@ -99,16 +101,12 @@ function displayItems() {
     });
 }
 
-/**
- * Inits the Speical Gallery
- */
-function init() {
-    loadItems();
-    jQuery('#new-item').click(newItem);
-
+function setupGrid() {
     galleryGrid = new Muuri('.gallery-grid', {
         'dragEnabled': true
     });
+
+    loadItems();
 
     jQuery('.gallery-grid').mousedown(function() {
         mouseClick = true;
@@ -120,17 +118,26 @@ function init() {
             mouseDragging = true;
         }
     })
-    
+
     jQuery('.gallery-grid').on('mouseup', '.item', function() {
         if (mouseDragging) {
             syncOrder();
         } else {
-            alert('twas clicked');
+            //openModal(this);
         }
 
         mouseDragging = false;
         mouseClick = false;
     })
+}
+
+/**
+ * Inits the Speical Gallery
+ */
+function init() {
+    jQuery('#new-item').click(newItem);
+
+    setupGrid(); 
 }
 
 jQuery(document).ready(init);
