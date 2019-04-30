@@ -3,25 +3,13 @@
 </div>
 
 <div class="gallery-grid">
-
-  <div class="item">
-    <div class="item-content">
-      <!-- Safe zone, enter your custom markup -->
-      This can be anything.
-      <!-- Safe zone ends -->
+    <!--
+    <div class="item" gallery-id='1'>
+        <div class="item-content">
+            This can be anything.
+        </div>
     </div>
-  </div>
-
-  <div class="item">
-    <div class="item-content">
-      <!-- Safe zone, enter your custom markup -->
-      <div class="my-custom-content">
-        Yippee!
-      </div>
-      <!-- Safe zone ends -->
-    </div>
-  </div>
-
+    -->
 </div>
 
 <!-- CSS --->

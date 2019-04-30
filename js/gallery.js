@@ -1,6 +1,9 @@
 var items = [];
 var galleryGrid;
 
+var mouseClick;
+var mouseDragging;
+
 /**
  * Loads the items
  */
@@ -12,6 +15,7 @@ function loadItems() {
     jQuery.post(ajaxurl, data, function(response) {
         if (response.success) {
             items = JSON.parse(response.data)
+            displayItems();
         } else {
             console.error('Failed to load gallery items')
         }
@@ -44,10 +48,55 @@ function newItem() {
     })
 
     saveItems();
+    displayItems();
 }
 
-function displayItems() {
+/**
+ * Syncs the order of the gallery items with the 'real' items
+ */
+function syncOrder() {
+    let orderedItems = [];
     
+    let galleryItems = galleryGrid.getItems();
+    for (let i=0; i<galleryItems.length; i++) {
+        let elementId = parseInt(galleryItems[i].getElement().getAttribute('gallery-id'));
+        orderedItems.push(items[elementId]);
+    }
+
+    items = orderedItems;
+    saveItems();
+}
+
+/**
+ * Returns the HTML for an item in the gallery
+ */
+function getItemHtml(id, blurb) {
+    return `<div class="item" gallery-id="${id}">
+        <div class="item-content">
+            ${blurb}
+        </div>
+    </div>`;
+}
+
+/**
+ * Clears the gallery and adds the items
+ */
+function displayItems() {
+    // clear previous items
+    if (galleryGrid) {
+        galleryGrid.destroy();
+        jQuery(galleryGrid.getElement()).empty();
+    }
+
+    // insert new items
+    for (let i=0; i<items.length; i++) {
+        jQuery(galleryGrid.getElement()).append(getItemHtml(i, items[i].blurb));
+    }
+
+    // refresh the gallery
+    galleryGrid = new Muuri('.gallery-grid', {
+        'dragEnabled': true
+    });
 }
 
 /**
@@ -60,6 +109,28 @@ function init() {
     galleryGrid = new Muuri('.gallery-grid', {
         'dragEnabled': true
     });
+
+    jQuery('.gallery-grid').mousedown(function() {
+        mouseClick = true;
+        mouseDragging = false;
+    })
+
+    jQuery('.gallery-grid').mousemove(function() {
+        if (mouseClick) {
+            mouseDragging = true;
+        }
+    })
+    
+    jQuery('.gallery-grid').on('mouseup', '.item', function() {
+        if (mouseDragging) {
+            syncOrder();
+        } else {
+            alert('twas clicked');
+        }
+
+        mouseDragging = false;
+        mouseClick = false;
+    })
 }
 
 jQuery(document).ready(init);
