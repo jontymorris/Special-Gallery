@@ -18,7 +18,7 @@
     
     <ul class="gallery-grid" v-if="selected">
         <div class="gallery-item" v-for="image in selected.images" v-on:click="imageClick(item)">
-            {{ image }}
+            <img v-bind:src="imageUrls[image]">
         </div>
     </ul>
 

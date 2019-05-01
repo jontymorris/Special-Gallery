@@ -29,7 +29,7 @@ function getImageSource(id) {
 
         jQuery.post(ajaxurl, data, function(response) {
             if (response.success) {
-                resolve(response.data);
+                resolve(response.data[0]);
             }
 
             reject('Failed to retrive image source');
@@ -54,13 +54,14 @@ const galleryApp = new Vue({
     'el': '#galleryApp',
     'data': {
         items: [],
-        selected: null
+        selected: null,
+        imageUrls: {}
     }, created() {
         // Retrive the gallery items
         fetchItems().then(function(data) {
             galleryApp.items = data;
         }, function(error) {
-            console.log(error);
+            console.error(error);
         });
     }, methods: {
         newItem: function() {
@@ -72,8 +73,13 @@ const galleryApp = new Vue({
                     galleryApp.selected.images = [];
                 }
 
-                galleryApp.selected.images.push(id);
-                galleryApp.$forceUpdate();
+                getImageSource(id).then(function(source) {
+                    imageUrls[id] = source;
+                    galleryApp.selected.images.push(id);
+                    galleryApp.$forceUpdate();
+                }, function(reject) {
+                    console.error(reject);
+                })
             });
         },
         selectClick: function(item) {
