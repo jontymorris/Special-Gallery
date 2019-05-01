@@ -17,6 +17,39 @@ function fetchItems() {
     });
 }
 
+/**
+ * Returns the image source
+ */
+function getImageSource(id) {
+    return new Promise(function(resolve, reject) {
+        let data = {
+            'action': 'get_image',
+            'id': id
+        };
+
+        jQuery.post(ajaxurl, data, function(response) {
+            if (response.success) {
+                resolve(response.data);
+            }
+
+            reject('Failed to retrive image source');
+        });
+    });
+}
+
+/**
+ * Returns an image ID from the Wordpress gallery
+ */
+function pickImage() {
+    return new Promise(function(resolve) {
+        wp.media.editor.send.attachment = function(props, attachment) {
+            resolve(attachment.id);
+        }
+
+        wp.media.editor.open();
+    });
+}
+
 const galleryApp = new Vue({
     'el': '#galleryApp',
     'data': {
@@ -34,7 +67,14 @@ const galleryApp = new Vue({
             this.items.push( {'blurb': 'test'} );
         },
         newImage: function() {
+            pickImage().then(function(id) {
+                if (!galleryApp.selected.images) {
+                    galleryApp.selected.images = [];
+                }
 
+                galleryApp.selected.images.push(id);
+                galleryApp.$forceUpdate();
+            });
         },
         selectClick: function(item) {
             this.selected = item;
