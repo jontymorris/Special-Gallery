@@ -74,8 +74,11 @@ const galleryApp = new Vue({
     'el': '#galleryApp',
     'data': {
         items: [],
+
         selected: null,
-        imageUrls: {}
+        imageUrls: {},
+
+        mainGrid: null
     }, created() {
         // retrive the gallery items
         fetchItems().then(function(data) {
@@ -89,6 +92,7 @@ const galleryApp = new Vue({
                             getImageSource(id).then(function(source) {
                                 galleryApp.imageUrls[id] = source;
                                 galleryApp.$forceUpdate();
+                                galleryApp.refreshMainGrid();
                             });
                         }
                     });
@@ -98,13 +102,30 @@ const galleryApp = new Vue({
             console.error(error);
         });
     }, methods: {
+        refreshMainGrid: function() {
+            this.mainGrid = new Muuri('.grid', {
+                'dragEnabled': true
+            });
+        },
+        syncMainGrid: function() {
+            let orderedItems = [];
+    
+            let galleryItems = this.mainGrid.getItems();
+            for (let i=0; i<galleryItems.length; i++) {
+                let elementId = parseInt(galleryItems[i].getElement().getAttribute('gallery-id'));
+                orderedItems.push(this.items[elementId]);
+            }
+
+            return orderedItems;
+        },
+
         newItem: function() {
             this.items.push({
                 'blurb': '',
                 'images': []
             });
 
-            saveItems(this.items);
+            saveItems(this.syncMainGrid());
         },
         newImage: function() {
             pickImage().then(function(id) {
@@ -117,17 +138,21 @@ const galleryApp = new Vue({
                     getImageSource(id).then(function(source) {
                         galleryApp.imageUrls[id] = source;
                         galleryApp.selected.images.push(id);
-                        galleryApp.$forceUpdate();
 
-                        saveItems(galleryApp.items)
+                        galleryApp.$forceUpdate();
+                        galleryApp.refreshMainGrid();
+
+                        saveItems(this.syncMainGrid())
                     }, function(reject) {
                         console.error(reject);
                     })
                 } else {
                     galleryApp.selected.images.push(id);
-                    galleryApp.$forceUpdate();
 
-                    saveItems(galleryApp.items);
+                    galleryApp.$forceUpdate();
+                    galleryApp.refreshMainGrid();
+
+                    saveItems(this.syncMainGrid());
                 }
             });
         },
@@ -139,7 +164,8 @@ const galleryApp = new Vue({
         },
         back: function() {
             this.selected = null;
-            saveItems(this.items);
+            galleryApp.refreshMainGrid();
+            saveItems(this.syncMainGrid());
         },
         removeItem: function() {
             let index = this.items.indexOf(this.selected);
@@ -157,3 +183,9 @@ const galleryApp = new Vue({
     }
 });
 
+var mainGridTouchy = new Touchy('.grid',
+function() {
+    alert('was clicked');
+}, function() {
+    saveItems(galleryApp.syncMainGrid());
+});

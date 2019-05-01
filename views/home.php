@@ -19,11 +19,20 @@
     </div>
 
     <!-- Gallery grid -->
+    <!--
     <ul class="gallery-grid" v-if="!selected">
         <div class="gallery-item" v-for="item in items" v-on:click="selectClick(item)">
             <img v-if="item.images" class="gallery-thumbnail" v-bind:src="imageUrls[item.images[0]]">
         </div>
-    </ul>
+    </ul>-->
+
+    <div class="grid">
+        <div class="item" v-for="(item, index) in items" :gallery-id="index">
+            <div class="item-content">
+                <img v-if="item.images" class="gallery-thumbnail" v-bind:src="imageUrls[item.images[0]]">
+            </div>
+        </div>
+    </div>
     
     <!-- Item grid -->
     <ul class="gallery-grid" v-if="selected">
@@ -39,5 +48,11 @@
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/gallery_v2.css' ) ?>">
 
 <!-- Scripts --->
+<script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script>
+<script src="https://unpkg.com/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://unpkg.com/muuri@0.7.1/dist/muuri.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script src="<?php echo plugins_url( 'special-gallery/js/touchy.js' ) ?>"></script>
 <script src="<?php echo plugins_url( 'special-gallery/js/gallery_v2.js' ) ?>"></script>
