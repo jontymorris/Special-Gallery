@@ -99,7 +99,12 @@ const galleryApp = new Vue({
         });
     }, methods: {
         newItem: function() {
-            this.items.push( {'blurb': 'test'} );
+            this.items.push({
+                'blurb': '',
+                'images': []
+            });
+
+            saveItems(this.items);
         },
         newImage: function() {
             pickImage().then(function(id) {
@@ -134,6 +139,14 @@ const galleryApp = new Vue({
         },
         back: function() {
             this.selected = null;
+            saveItems(this.items);
+        },
+        remove: function() {
+            let index = this.items.indexOf(this.selected);
+            if (index > -1) {
+                this.items.splice(index, 1);
+                this.selected = null;
+            }
         }
     }
 });
