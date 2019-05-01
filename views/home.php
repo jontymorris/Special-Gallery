@@ -9,7 +9,7 @@
             <button class="button" v-on:click="back">Back</button>
             <button class="button" v-on:click="newImage">Add image</button>
             <div class="right">
-                <button class="button danger" v-on:click="remove">Remove</button>
+                <button class="button danger" v-on:click="removeItem">Remove</button>
             </div>
         </div>
         <div v-if="selected">
@@ -29,6 +29,7 @@
     <ul class="gallery-grid" v-if="selected">
         <div class="gallery-item" v-for="image in selected.images" v-on:click="imageClick(image)">
             <img class="gallery-thumbnail" v-bind:src="imageUrls[image]">
+            <span class="gallery-remove" v-on:click="removeImage(image)">&times;</span>
         </div>
     </ul>
 

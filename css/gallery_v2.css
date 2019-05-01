@@ -32,6 +32,13 @@
     height: 100%;
 }
 
+.gallery-remove {
+    position: absolute;
+    z-index: 1;
+    color: red;
+    cursor: pointer;
+}
+
 .gallery-input {
     width: 100%;
     max-width: 500px;

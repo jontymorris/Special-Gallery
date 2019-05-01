@@ -141,11 +141,17 @@ const galleryApp = new Vue({
             this.selected = null;
             saveItems(this.items);
         },
-        remove: function() {
+        removeItem: function() {
             let index = this.items.indexOf(this.selected);
             if (index > -1) {
                 this.items.splice(index, 1);
                 this.selected = null;
+            }
+        },
+        removeImage: function(image) {
+            let index = this.selected.images.indexOf(image);
+            if (index > -1) {
+                this.selected.images.splice(index, 1);
             }
         }
     }
