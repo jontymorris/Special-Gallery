@@ -3,6 +3,11 @@
     background-color: #e03535 !important;
 }
 
+.right {
+    float: right;
+    padding-right: 10px;
+}
+
 #gallery-options {
     padding: 10px 0px 10px 0px;
 }

@@ -8,7 +8,9 @@
         <div v-if="selected">
             <button class="button" v-on:click="back">Back</button>
             <button class="button" v-on:click="newImage">Add image</button>
-            <button class="button danger" v-on:click="remove">Remove</button>
+            <div class="right">
+                <button class="button danger" v-on:click="remove">Remove</button>
+            </div>
         </div>
         <div v-if="selected">
             <br>
