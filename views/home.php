@@ -12,13 +12,13 @@
 
     <ul class="gallery-grid" v-if="!selected">
         <div class="gallery-item" v-for="item in items" v-on:click="selectClick(item)">
-            {{ item.blurb }}
+            <img v-if="item.images" class="gallery-thumbnail" v-bind:src="imageUrls[item.images[0]]">
         </div>
     </ul>
     
     <ul class="gallery-grid" v-if="selected">
         <div class="gallery-item" v-for="image in selected.images" v-on:click="imageClick(item)">
-            <img v-bind:src="imageUrls[image]">
+            <img class="gallery-thumbnail" v-bind:src="imageUrls[image]">
         </div>
     </ul>
 

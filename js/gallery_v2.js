@@ -73,13 +73,18 @@ const galleryApp = new Vue({
                     galleryApp.selected.images = [];
                 }
 
-                getImageSource(id).then(function(source) {
-                    imageUrls[id] = source;
+                if (!(id in galleryApp.imageUrls)) {
+                    getImageSource(id).then(function(source) {
+                        galleryApp.imageUrls[id] = source;
+                        galleryApp.selected.images.push(id);
+                        galleryApp.$forceUpdate();
+                    }, function(reject) {
+                        console.error(reject);
+                    })
+                } else {
                     galleryApp.selected.images.push(id);
                     galleryApp.$forceUpdate();
-                }, function(reject) {
-                    console.error(reject);
-                })
+                }
             });
         },
         selectClick: function(item) {
