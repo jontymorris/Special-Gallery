@@ -18,6 +18,26 @@ function fetchItems() {
 }
 
 /**
+ * Saves the items on the server
+ */
+function saveItems(items) {
+    return new Promise(function(resolve, reject) {
+        let data = {
+            'action': 'save_items',
+            'items': items
+        };
+
+        jQuery.post(ajaxurl, data, function(response) {
+            if (response.success) {
+                resolve('Saved items successfully');
+            }
+
+            reject('Failed to save items');
+        });
+    });
+}
+
+/**
  * Returns the image source
  */
 function getImageSource(id) {
@@ -57,9 +77,23 @@ const galleryApp = new Vue({
         selected: null,
         imageUrls: {}
     }, created() {
-        // Retrive the gallery items
+        // retrive the gallery items
         fetchItems().then(function(data) {
             galleryApp.items = data;
+            
+            // retrive the thumbnails
+            galleryApp.items.forEach(function(item) {
+                if (item.images) {
+                    item.images.forEach(function(id) {
+                        if (!(id in galleryApp.imageUrls)) {
+                            getImageSource(id).then(function(source) {
+                                galleryApp.imageUrls[id] = source;
+                                galleryApp.$forceUpdate();
+                            });
+                        }
+                    });
+                }
+            });
         }, function(error) {
             console.error(error);
         });
@@ -74,16 +108,21 @@ const galleryApp = new Vue({
                 }
 
                 if (!(id in galleryApp.imageUrls)) {
+                    // retrive the image source
                     getImageSource(id).then(function(source) {
                         galleryApp.imageUrls[id] = source;
                         galleryApp.selected.images.push(id);
                         galleryApp.$forceUpdate();
+
+                        saveItems(galleryApp.items)
                     }, function(reject) {
                         console.error(reject);
                     })
                 } else {
                     galleryApp.selected.images.push(id);
                     galleryApp.$forceUpdate();
+
+                    saveItems(galleryApp.items);
                 }
             });
         },
