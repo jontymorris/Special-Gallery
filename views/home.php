@@ -22,7 +22,7 @@
     <div class="grid" id="main-grid" v-if="!selected">
         <div class="item" v-for="(item, index) in items" :gallery-id="index">
             <div class="item-content">
-                <img v-if="item.images" class="gallery-thumbnail" v-bind:src="imageUrls[item.images[0]]" :gallery-id="index">
+                <img class="gallery-thumbnail" v-bind:src="getItemThumbnail(item)" :gallery-id="index">
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
 </div>
 
 <!-- CSS --->
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/gallery_v2.css' ) ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/gallery.css' ) ?>">
 
 <!-- Scripts --->
 <script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script>
@@ -48,4 +48,4 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
 <script src="<?php echo plugins_url( 'special-gallery/js/touchy.js' ) ?>"></script>
-<script src="<?php echo plugins_url( 'special-gallery/js/gallery_v2.js' ) ?>"></script>
+<script src="<?php echo plugins_url( 'special-gallery/js/gallery.js' ) ?>"></script>

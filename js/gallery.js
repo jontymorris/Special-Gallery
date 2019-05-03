@@ -1,143 +1,209 @@
-var items = [];
-
-var galleryGrid;
-var itemGrid;
-
-var mouseClick;
-var mouseDragging;
-
 /**
- * Loads the items
+ * Retrive the gallery items from Wordpress
  */
-function loadItems() {
-    let data = {
-        'action': 'get_items',
-    };
-
-    jQuery.post(ajaxurl, data, function(response) {
-        if (response.success) {
-            items = JSON.parse(response.data)
-            displayItems();
-        } else {
-            console.error('Failed to load gallery items')
+function fetchItems() {
+    return new Promise(function(resolve, reject) {
+        let data = {
+            'action': 'get_items'
         }
-    })
+
+        jQuery.post(ajaxurl, data, function(response) {
+            if (response.success) {
+                resolve( JSON.parse(response.data) );
+            }
+
+            reject('Failed to retrive items');
+        })
+    });
 }
 
 /**
- * Saves the items
+ * Saves the items on the server
  */
-function saveItems() {
-    let data = {
-        'action': 'save_items',
-        'items': items
-    };
+function saveItems(items) {
+    return new Promise(function(resolve, reject) {
+        let data = {
+            'action': 'save_items',
+            'items': items
+        };
 
-    jQuery.post(ajaxurl, data, function(response) {
-        if (!response.success) {
-            console.log('Failed to save the gallery items');
+        jQuery.post(ajaxurl, data, function(response) {
+            if (response.success) {
+                resolve('Saved items successfully');
+            }
+
+            reject('Failed to save items');
+        });
+    });
+}
+
+/**
+ * Returns the image source
+ */
+function getImageSource(id) {
+    return new Promise(function(resolve, reject) {
+        let data = {
+            'action': 'get_image',
+            'id': id
+        };
+
+        jQuery.post(ajaxurl, data, function(response) {
+            if (response.success) {
+                resolve(response.data[0]);
+            }
+
+            reject('Failed to retrive image source');
+        });
+    });
+}
+
+/**
+ * Returns an image ID from the Wordpress gallery
+ */
+function pickImage() {
+    return new Promise(function(resolve) {
+        wp.media.editor.send.attachment = function(props, attachment) {
+            resolve(attachment.id);
         }
-    })
+
+        wp.media.editor.open();
+    });
 }
 
-/**
- * Creates an empty item and saves it
- */
-function newItem() {
-    items.push({
-        'blurb': '',
-        'images': []
-    })
+const galleryApp = new Vue({
+    'el': '#galleryApp',
+    'data': {
+        items: [],
+        selected: null,
+        imageUrls: {},
+        mainGrid: null
+    }, created() {
+        // retrive the gallery items
+        fetchItems().then(function(data) {
+            galleryApp.items = data;
+            
+            // retrive the thumbnails
+            galleryApp.items.forEach(function(item) {
+                if (item.images) {
+                    item.images.forEach(function(id) {
+                        if (!(id in galleryApp.imageUrls)) {
+                            getImageSource(id).then(function(source) {
+                                galleryApp.imageUrls[id] = source;
+                                galleryApp.refreshMainGrid();
+                            });
+                        }
+                    });
+                }
+            });
+        }, function(error) {
+            console.error(error);
+        });
+    }, methods: {
+        refreshMainGrid: function() {
+            this.$nextTick(function() {
+                if (this.selected) {
+                    return;
+                }
 
-    saveItems();
-    displayItems();
-}
+                if (jQuery('#main-grid').length > 0) {
+                    this.mainGrid = new Muuri('#main-grid', {
+                        'dragEnabled': true
+                    });
 
-/**
- * Syncs the order of the gallery items with the 'real' items
- */
-function syncOrder() {
-    let orderedItems = [];
+                    // debug
+                    mainGridTouchy = new Touchy('#main-grid',
+                        galleryApp.itemClick, // click
+                        galleryApp.itemDrag // drag
+                    );
+                }
+            });
+            
+            this.$forceUpdate();
+        },
+        syncMainGrid: function() {
+            let orderedItems = [];
     
-    let galleryItems = galleryGrid.getItems();
-    for (let i=0; i<galleryItems.length; i++) {
-        let elementId = parseInt(galleryItems[i].getElement().getAttribute('gallery-id'));
-        orderedItems.push(items[elementId]);
-    }
+            let galleryItems = this.mainGrid.getItems();
+            for (let i=0; i<galleryItems.length; i++) {
+                let elementId = parseInt(galleryItems[i].getElement().getAttribute('gallery-id'));
+                orderedItems.push(this.items[elementId]);
+            }
 
-    items = orderedItems;
-    saveItems();
-}
+            return orderedItems;
+        },
+        newItem: function() {
+            this.items.push({
+                'blurb': '',
+                'images': []
+            });
 
-/**
- * Returns the HTML for an item in the gallery
- */
-function getItemHtml(id, blurb) {
-    return `<div class="item" gallery-id="${id}">
-        <div class="item-content">
-            ${blurb}
-        </div>
-    </div>`;
-}
+            saveItems(this.syncMainGrid());
+        },
+        newImage: function() {
+            pickImage().then(function(id) {
+                if (!galleryApp.selected.images) {
+                    galleryApp.selected.images = [];
+                }
 
-/**
- * Clears the gallery and adds the items
- */
-function displayItems() {
-    // clear previous items
-    if (galleryGrid) {
-        galleryGrid.destroy();
-        jQuery(galleryGrid.getElement()).empty();
-    }
+                if (!(id in galleryApp.imageUrls)) {
+                    // retrive the image source
+                    getImageSource(id).then(function(source) {
+                        galleryApp.imageUrls[id] = source;
+                        galleryApp.selected.images.push(id);
 
-    // insert new items
-    for (let i=0; i<items.length; i++) {
-        jQuery(galleryGrid.getElement()).append(getItemHtml(i, items[i].blurb));
-    }
+                        galleryApp.refreshMainGrid();
 
-    // refresh the gallery
-    galleryGrid = new Muuri('.gallery-grid', {
-        'dragEnabled': true
-    });
-}
+                        saveItems(this.syncMainGrid())
+                    }, function(reject) {
+                        console.error(reject);
+                    })
+                } else {
+                    galleryApp.selected.images.push(id);
+                    galleryApp.refreshMainGrid();
+                    
+                    saveItems(this.syncMainGrid());
+                }
+            });
+        },
+        getItemThumbnail: function(item) {
+            if (item.images) {
+                if (item.images.length > 0) {
+                    let id = item.images[0];
+                    if (id in this.imageUrls) {
+                        return this.imageUrls[id];
+                    }
+                }
+            }
 
-function setupGrid() {
-    galleryGrid = new Muuri('.gallery-grid', {
-        'dragEnabled': true
-    });
+            return '';
+        },
+        itemClick: function(id) {
+            this.selected = this.items[id];
+        },
+        itemDrag: function() {
+            saveItems(this.syncMainGrid());
+        },
+        imageClick: function(image) {
 
-    loadItems();
+        },
+        back: function() {
+            this.selected = null;
+            this.refreshMainGrid();
 
-    jQuery('.gallery-grid').mousedown(function() {
-        mouseClick = true;
-        mouseDragging = false;
-    })
-
-    jQuery('.gallery-grid').mousemove(function() {
-        if (mouseClick) {
-            mouseDragging = true;
+            saveItems(this.syncMainGrid());
+        },
+        removeItem: function() {
+            let index = this.items.indexOf(this.selected);
+            if (index > -1) {
+                this.items.splice(index, 1);
+                this.selected = null;
+            }
+        },
+        removeImage: function(image) {
+            let index = this.selected.images.indexOf(image);
+            if (index > -1) {
+                this.selected.images.splice(index, 1);
+            }
         }
-    })
-
-    jQuery('.gallery-grid').on('mouseup', '.item', function() {
-        if (mouseDragging) {
-            syncOrder();
-        } else {
-            //openModal(this);
-        }
-
-        mouseDragging = false;
-        mouseClick = false;
-    })
-}
-
-/**
- * Inits the Speical Gallery
- */
-function init() {
-    jQuery('#new-item').click(newItem);
-
-    setupGrid(); 
-}
-
-jQuery(document).ready(init);
+    }
+});
