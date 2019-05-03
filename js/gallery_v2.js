@@ -91,7 +91,6 @@ const galleryApp = new Vue({
                         if (!(id in galleryApp.imageUrls)) {
                             getImageSource(id).then(function(source) {
                                 galleryApp.imageUrls[id] = source;
-                                galleryApp.$forceUpdate();
                                 galleryApp.refreshMainGrid();
                             });
                         }
@@ -103,9 +102,19 @@ const galleryApp = new Vue({
         });
     }, methods: {
         refreshMainGrid: function() {
-            this.mainGrid = new Muuri('.grid', {
-                'dragEnabled': true
+            this.$nextTick(function() {
+                if (this.selected) {
+                    return;
+                }
+
+                if (jQuery('#main-grid').length > 0) {
+                    this.mainGrid = new Muuri('#main-grid', {
+                        'dragEnabled': true
+                    });
+                }
             });
+            
+            this.$forceUpdate();
         },
         syncMainGrid: function() {
             let orderedItems = [];
@@ -139,7 +148,6 @@ const galleryApp = new Vue({
                         galleryApp.imageUrls[id] = source;
                         galleryApp.selected.images.push(id);
 
-                        galleryApp.$forceUpdate();
                         galleryApp.refreshMainGrid();
 
                         saveItems(this.syncMainGrid())
@@ -149,7 +157,6 @@ const galleryApp = new Vue({
                 } else {
                     galleryApp.selected.images.push(id);
 
-                    galleryApp.$forceUpdate();
                     galleryApp.refreshMainGrid();
 
                     saveItems(this.syncMainGrid());
@@ -164,7 +171,8 @@ const galleryApp = new Vue({
         },
         back: function() {
             this.selected = null;
-            galleryApp.refreshMainGrid();
+            this.refreshMainGrid();
+
             saveItems(this.syncMainGrid());
         },
         removeItem: function() {
@@ -183,9 +191,13 @@ const galleryApp = new Vue({
     }
 });
 
-var mainGridTouchy = new Touchy('.grid',
-function() {
-    alert('was clicked');
-}, function() {
-    saveItems(galleryApp.syncMainGrid());
-});
+var mainGridTouchy = new Touchy('#main-grid',
+    // click
+    function(id) {
+        galleryApp.selected = galleryApp.items[id];
+    }, 
+    // drag
+    function() {
+        saveItems(galleryApp.syncMainGrid());
+    }
+);

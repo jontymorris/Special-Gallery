@@ -18,18 +18,11 @@
         </div>
     </div>
 
-    <!-- Gallery grid -->
-    <!--
-    <ul class="gallery-grid" v-if="!selected">
-        <div class="gallery-item" v-for="item in items" v-on:click="selectClick(item)">
-            <img v-if="item.images" class="gallery-thumbnail" v-bind:src="imageUrls[item.images[0]]">
-        </div>
-    </ul>-->
-
-    <div class="grid">
+    <!-- Main grid -->
+    <div class="grid" id="main-grid" v-if="!selected">
         <div class="item" v-for="(item, index) in items" :gallery-id="index">
             <div class="item-content">
-                <img v-if="item.images" class="gallery-thumbnail" v-bind:src="imageUrls[item.images[0]]">
+                <img v-if="item.images" class="gallery-thumbnail" v-bind:src="imageUrls[item.images[0]]" :gallery-id="index">
             </div>
         </div>
     </div>

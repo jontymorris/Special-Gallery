@@ -14,11 +14,12 @@ class Touchy {
             }
         })
 
-        jQuery(className).mouseup(function() {
+        jQuery(className).mouseup(function(event) {
             if (this.gridDrag) {
                 dragCallback();
             } else {
-                clickCallback();
+                let id = event.target.getAttribute('gallery-id');
+                clickCallback(id);
             }
         
             this.gridClick = false;
