@@ -11,13 +11,13 @@ const itemApp = new Vue({
         // retrive the gallery items
         fetchItems().then(function(data) {
             itemApp.items = data;
-
+            
             // find the selected item
             itemApp.params = new window.URLSearchParams(window.location.search);
             itemApp.selected = itemApp.items[itemApp.params.get('item')];
 
             // retrive the thumbnails
-            itemApp.items.forEach(function(item) {
+            itemApp.items.forEach(function(item, index) {
                 if (item.images) {
                     item.images.forEach(function(id) {
                         if (!(id in itemApp.imageUrls)) {
@@ -27,6 +27,8 @@ const itemApp = new Vue({
                             });
                         }
                     });
+                } else if (index == itemApp.items.length-1) {
+                    itemApp.refreshGrid();
                 }
             });
         }, function(error) {
@@ -35,18 +37,15 @@ const itemApp = new Vue({
     },
     methods: {
         refreshGrid: function() {
+            this.$forceUpdate();
+
             this.$nextTick(function() {
-                this.grid = new Muuri('.grid', {
+                itemApp.grid = new Muuri('.grid', {
                     'dragEnabled': true
                 });
 
-                new Touchy('.grid',
-                    itemApp.imageClick, // click
-                    itemApp.imageDrag // drag
-                );
+                new Touchy('.grid', this.imageClick, this.imageDrag);
             });
-            
-            this.$forceUpdate();
         },
 
         getOrderedImages: function() {
@@ -55,7 +54,7 @@ const itemApp = new Vue({
             let galleryImages = this.grid.getItems();
             for (let i=0; i<galleryImages.length; i++) {
                 let elementId = parseInt(galleryImages[i].getElement().getAttribute('gallery-id'));
-                orderedItems.push(this.selected[elementId]);
+                orderedItems.push(this.selected.images[elementId]);
             }
 
             return orderedItems;
@@ -83,23 +82,35 @@ const itemApp = new Vue({
                     // retrive the image source
                     getImageSource(id).then(function(source) {
                         itemApp.imageUrls[id] = source;
+                        
+                        if (itemApp.selected.images.length > 1) {
+                            itemApp.selected.images = itemApp.getOrderedImages();
+                        }
+                        
                         itemApp.selected.images.push(id);
-
-                        itemApp.refreshGrid();
-                        //saveItems(galleryApp.syncMainGrid())
+                        
+                        saveItems(itemApp.items).then(function(resolve) {    
+                            itemApp.refreshGrid();
+                        });
                     }, function(reject) {
                         console.error(reject);
                     })
                 } else {
+                    if (itemApp.selected.images.length > 1) {
+                        itemApp.selected.images = itemApp.getOrderedImages();
+                    }
+                    
                     itemApp.selected.images.push(id);
-                    itemApp.refreshGrid();
-                    //saveItems(galleryApp.syncMainGrid())
+                    
+                    saveItems(itemApp.items).then(function(resolve) {
+                        itemApp.refreshGrid();
+                    });
                 }
             });
         },
         
         imageClick: function(image) {
-            console.log(image);
+            
         },
 
         imageDrag: function() {
@@ -107,37 +118,43 @@ const itemApp = new Vue({
         },
 
         back: function() {
-            this.selected.images = this.getOrderedImages();
-            saveItems(this.items).then(function(resolve) {
+            if (this.selected.images && this.selected.images.length > 1) {
+                this.selected.images = this.getOrderedImages()
+            }
+            
+            this.grid.destroy(false);
+
+            saveItems(this.items).then(function() {
                 let id = itemApp.params.get('item');
                 let subString = 'item=' + id;
 
                 window.location.href = window.location.href.replace('&' + subString, '');
                 window.location.href = window.location.href.replace(subString, '');
-            }, function(reject) {
-                console.error(reject);
             });
         },
 
         removeImage: function(image) {
-            //let images = this.getOrderedImages();
+            this.selected.images = this.getOrderedImages();
 
             let index = this.selected.images.indexOf(image);
             if (index > -1) {
                 this.selected.images.splice(index, 1);
-            }
 
-            //this.selected.images = images;
-            this.refreshGrid();
+                saveItems(this.items).then(function(resolve) {
+                    itemApp.$forceUpdate();
+                    itemApp.refreshGrid();
+                });
+            }
         },
         
         removeItem: function() {
+            this.grid.destroy(true);
+            this.grid = null;
+
             let index = this.items.indexOf(this.selected);
             if (index > -1) {
-                this.grid.destroy(true);
-                this.grid = null;
-                
                 this.items.splice(index, 1);
+
                 saveItems(this.items).then(function(resolve) {
                     let id = itemApp.params.get('item');
                     let subString = 'item=' + id;
