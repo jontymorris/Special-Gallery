@@ -1,4 +1,4 @@
-data/*
+data/items.json
 
 *.log
 wp-config.php

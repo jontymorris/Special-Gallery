@@ -31,20 +31,23 @@ const galleryApp = new Vue({
     },
     methods: {
         refreshGrid: function() {
+            this.$forceUpdate();
+
             this.$nextTick(function() {
                 galleryApp.grid = new Muuri('.grid', {
                     'dragEnabled': true
                 });
 
                 new Touchy('.grid', this.itemClick, this.itemDrag);
-            })
-
-            this.$forceUpdate();
+            });
         },
 
         getOrderedItems: function() {
+            if (!this.grid) {
+                return [];
+            }
+
             let orderedItems = [];
-    
             let galleryItems = this.grid.getItems();
             for (let i=0; i<galleryItems.length; i++) {
                 let elementId = parseInt(galleryItems[i].getElement().getAttribute('gallery-id'));
