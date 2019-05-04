@@ -12,7 +12,7 @@ function gallery_dashboard() {
     wp_enqueue_media();
 
     if ( !isset( $_GET['item'] ) ) {
-        include( plugin_dir_path( __FILE__ ) . 'views/home.php' );    
+        include( plugin_dir_path( __FILE__ ) . 'views/home.php' );
     }
 
     else {
