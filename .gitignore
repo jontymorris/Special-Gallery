@@ -1,4 +1,4 @@
-data/
+data/*
 
 *.log
 wp-config.php
