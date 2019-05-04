@@ -18,7 +18,10 @@ class Touchy {
                     dragCallback();
                 } else {
                     let id = event.target.getAttribute('gallery-id');
-                    clickCallback(id);
+
+                    if (id) {
+                        clickCallback(id);
+                    }
                 }
             
                 this.mouseClick = false;

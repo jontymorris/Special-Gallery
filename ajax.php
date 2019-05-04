@@ -32,14 +32,14 @@ function gallery_get_items() {
 
 // saves the gallery items
 function gallery_save_items() {
-    if ( !isset( $_POST['items'] ) ) {
-        wp_send_json_error();
+    $data = json_encode( [] );
+
+    if ( array_key_exists( 'items', $_POST ) ) {
+        $data = json_encode( $_POST['items'] );
     }
 
-    $data = json_encode( $_POST['items'] );
-
     file_put_contents( plugin_dir_path( __FILE__ ) . 'data/items.json', $data );
-    wp_send_json_success();
+    wp_send_json_success( 'Saved the items' );
 }
 
 ?>

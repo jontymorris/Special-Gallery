@@ -10,7 +10,14 @@ function gallery_menu() {
 // serve the dashboard page
 function gallery_dashboard() {
     wp_enqueue_media();
-    include( plugin_dir_path( __FILE__ ) . 'views/home.php' );
+
+    if ( !isset( $_GET['item'] ) ) {
+        include( plugin_dir_path( __FILE__ ) . 'views/home.php' );    
+    }
+
+    else {
+        include( plugin_dir_path( __FILE__ ) . 'views/item.php' );
+    }
 }
 
 ?>

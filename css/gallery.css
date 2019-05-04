@@ -12,21 +12,6 @@
     padding: 10px 0px 10px 0px;
 }
 
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-    grid-gap: 10px;
-}
-
-.gallery-item {
-    width: 250px;
-    height: 250px;
-    background: #272727;
-    color: #ffffff;
-    font-size: 30px;
-    cursor: pointer;
-}
-
 .gallery-thumbnail {
     width: 100%;
     height: 100%;
@@ -34,9 +19,11 @@
 
 .gallery-remove {
     position: absolute;
-    z-index: 1;
+    z-index: 9;
+    right: -15px;
     color: red;
     cursor: pointer;
+    font-size: 60px;
 }
 
 .gallery-input {
@@ -55,7 +42,7 @@
     height: 250px;
     margin: 5px;
     z-index: 1;
-    background: rgb(27, 27, 27);
+    background: #464646;
     color: #fff;
   }
   .item.muuri-item-dragging {
