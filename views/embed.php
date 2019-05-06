@@ -29,9 +29,14 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close" v-on:click="close">&times;</span>
+
+            <span class="slide-button left-control" v-on:click="lastSlide">&lt;</span>
+            <span class="slide-button right-control" v-on:click="nextSlide">&gt;</span>
+
             <div class="image-container">
-                <img :src="fullsize[selected.images[0]]">
+                <img :src="fullsize[selected.images[slideIndex]]">
             </div>
+            
             <span class="blurb">
                 {{ selected.blurb }}
             </span>

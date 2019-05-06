@@ -26,8 +26,28 @@
     text-align: center;
 }
 
+.slide-button {
+    cursor: pointer;
+    padding: 30px;
+    font-size: 60px;
+    font-weight: bold;
+    user-select: none;
+    -moz-user-select: none;
+}
+.slide-button:active {
+    background: #00000007;
+}
+
+.left-control {
+    float: left;
+}
+
+.right-control {
+    float: right;
+}
+
 .image-container img {
-    
+
 }
 
 .blurb {
