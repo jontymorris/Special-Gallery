@@ -8,6 +8,16 @@ const itemApp = new Vue({
         params: null
     },
     created() {
+        if ('imageUrls' in window.localStorage) {
+            this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
+            this.refreshGrid();
+        }
+
+        if ('items' in window.localStorage) {
+            this.items = JSON.parse(window.localStorage.getItem('items'));
+            this.refreshGrid();
+        }
+
         // retrive the gallery items
         fetchItems().then(function(data) {
             itemApp.items = data;
@@ -27,8 +37,13 @@ const itemApp = new Vue({
                             });
                         }
                     });
-                } else if (index == itemApp.items.length-1) {
+                }
+                
+                if (index == itemApp.items.length-1) {
                     itemApp.refreshGrid();
+                    
+                    window.localStorage.setItem('imageUrls', JSON.stringify(galleryApp.imageUrls));
+                    window.localStorage.setItem('items', JSON.stringify(galleryApp.items));
                 }
             });
         }, function(error) {
