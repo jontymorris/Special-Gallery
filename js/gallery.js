@@ -70,7 +70,11 @@ const galleryApp = new Vue({
             let galleryItems = this.grid.getItems();
             for (let i=0; i<galleryItems.length; i++) {
                 let elementId = parseInt(galleryItems[i].getElement().getAttribute('gallery-id'));
-                orderedItems.push(this.items[elementId]);
+                let item = this.items[elementId];
+
+                if (typeof item !== 'undefined') {
+                    orderedItems.push(item);
+                }
             }
 
             return orderedItems;
