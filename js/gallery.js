@@ -7,13 +7,17 @@ const galleryApp = new Vue({
     },
     created() {
         if ('imageUrls' in window.localStorage) {
-            this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
-            this.refreshGrid();
+            if (window.localStorage.getItem('imageUrls') !== 'undefined') {
+                this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
+                this.refreshGrid();
+            }
         }
 
         if ('items' in window.localStorage) {
-            this.items = JSON.parse(window.localStorage.getItem('items'));
-            this.refreshGrid();
+            if (window.localStorage.getItem('items') !== 'undefined') {
+                this.items = JSON.parse(window.localStorage.getItem('items'));
+                this.refreshGrid();
+            }
         }
 
         // retrive the gallery items

@@ -9,13 +9,17 @@ const itemApp = new Vue({
     },
     created() {
         if ('imageUrls' in window.localStorage) {
-            this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
-            this.refreshGrid();
+            if (window.localStorage.getItem('imageUrls') !== 'undefined') {
+                this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
+                this.refreshGrid();
+            }
         }
 
         if ('items' in window.localStorage) {
-            this.items = JSON.parse(window.localStorage.getItem('items'));
-            this.refreshGrid();
+            if (window.localStorage.getItem('items') !== 'undefined') {
+                this.items = JSON.parse(window.localStorage.getItem('items'));
+                this.refreshGrid();
+            }
         }
 
         // retrive the gallery items
@@ -41,9 +45,9 @@ const itemApp = new Vue({
                 
                 if (index == itemApp.items.length-1) {
                     itemApp.refreshGrid();
-                    
-                    window.localStorage.setItem('imageUrls', JSON.stringify(galleryApp.imageUrls));
-                    window.localStorage.setItem('items', JSON.stringify(galleryApp.items));
+
+                    window.localStorage.setItem('imageUrls', JSON.stringify(itemApp.imageUrls));
+                    window.localStorage.setItem('items', JSON.stringify(itemApp.items));
                 }
             });
         }, function(error) {
@@ -55,6 +59,10 @@ const itemApp = new Vue({
             this.$forceUpdate();
 
             this.$nextTick(function() {
+                if (jQuery('.grid').length == 0) {
+                    return;
+                }
+
                 itemApp.grid = new Muuri('.grid', {
                     'dragEnabled': true
                 });
@@ -133,11 +141,15 @@ const itemApp = new Vue({
         },
 
         back: function() {
-            if (this.selected.images && this.selected.images.length > 1) {
-                this.selected.images = this.getOrderedImages()
+            if (this.selected) {
+                if (this.selected.images && this.selected.images.length > 1) {
+                    this.selected.images = this.getOrderedImages()
+                }
             }
             
-            this.grid.destroy(false);
+            if (this.grid) {
+                this.grid.destroy(false);
+            }
 
             saveItems(this.items).then(function() {
                 let id = itemApp.params.get('item');
