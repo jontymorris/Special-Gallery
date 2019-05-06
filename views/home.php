@@ -9,7 +9,7 @@
     <div class="grid">
         <div class="item" v-for="(item, index) in items" :gallery-id="index">
             <div class="item-content">
-                <img class="gallery-thumbnail" v-bind:src="getItemThumbnail(item)" :gallery-id="index">
+                <img class="gallery-thumbnail click" v-bind:src="getItemThumbnail(item)" :gallery-id="index">
             </div>
         </div>
     </div>
@@ -17,6 +17,7 @@
 </div>
 
 <!-- CSS --->
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/muuri.css' ) ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/gallery.css' ) ?>">
 
 <!-- Scripts --->

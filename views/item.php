@@ -6,7 +6,7 @@
             <button class="button" v-on:click="back">Back</button>
             <button class="button" v-on:click="newImage">Add image</button>
             <div class="right">
-                <button class="button danger" v-on:click="removeItem">Remove</button>
+                <button class="button danger" v-on:click="removeItem">Remove item</button>
             </div>
         </div>
         <div>
@@ -20,7 +20,7 @@
         <div class="item" v-for="(image, index) in selected.images" :gallery-id="index">
             <div class="item-content">
                 <img class="gallery-thumbnail" v-bind:src="imageUrls[image]" :gallery-id="index">
-                <span class="gallery-remove" v-on:click="removeImage(image)">&times;</span>
+                <span class="gallery-remove danger" v-on:click="removeImage(image)">&times;</span>
             </div>
         </div>
     </div>
@@ -28,6 +28,7 @@
 </div>
 
 <!-- CSS --->
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/muuri.css' ) ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/gallery.css' ) ?>">
 
 <!-- Scripts --->
