@@ -5,7 +5,7 @@ A simple Wordpress plugin that adds a 'special gallery'.
 
 - Drag the folder into the `wp-plugins` directory.
 - Create a `data` folder in the `special-gallery` folder.
-- (Optional) Create an `items.json` file in 'data' that just contains `[]`
+- (Optional) Create an `items.json` file in `data` that contains `[]`
 - Activate the plugin through Wordpress.
 
 Afterwards, there will be a new menu option called 'Special Gallery'.
