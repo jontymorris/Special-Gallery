@@ -59,15 +59,15 @@ const itemApp = new Vue({
             this.$forceUpdate();
 
             this.$nextTick(function() {
-                if (jQuery('.grid').length == 0) {
+                if (jQuery('.gallery-grid').length == 0) {
                     return;
                 }
 
-                itemApp.grid = new Muuri('.grid', {
+                itemApp.grid = new Muuri('.gallery-grid', {
                     'dragEnabled': true
                 });
 
-                new Touchy('.grid', this.imageClick, this.imageDrag);
+                new Touchy('.gallery-grid', this.imageClick, this.imageDrag);
             });
         },
 

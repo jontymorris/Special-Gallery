@@ -53,11 +53,11 @@ const galleryApp = new Vue({
             this.$forceUpdate();
 
             this.$nextTick(function() {
-                galleryApp.grid = new Muuri('.grid', {
+                galleryApp.grid = new Muuri('.gallery-grid', {
                     'dragEnabled': true
                 });
 
-                new Touchy('.grid', this.itemClick, this.itemDrag);
+                new Touchy('.gallery-grid', this.itemClick, this.itemDrag);
             });
         },
 

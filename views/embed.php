@@ -29,24 +29,24 @@
 <div id="galleryApp">
 
     <div class="special-gallery">
-        <div class="thumbnail" v-for="item in items">
+        <div class="special-gallery-item" v-for="item in items">
             <img :src="thumbnails[item.images[0]]" v-on:click="itemClick(item)">
         </div>
     </div>
 
-    <div id="myModal" class="modal" v-if="selected">
+    <div id="myModal" class="gallery-modal" v-if="selected">
         <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close" v-on:click="close">&times;</span>
+        <div class="gallery-modal-content">
+            <span class="gallery-close" v-on:click="close">&times;</span>
 
-            <div class="image-container">
+            <div class="gallery-image-container">
                 <img :src="fullsize[selected.images[slideIndex]]">
             </div>
             
-            <span class="slide-button left-control" v-on:click="lastSlide">&lt;</span>
-            <span class="slide-button right-control" v-on:click="nextSlide">&gt;</span>
+            <span class="gallery-slide-button gallery-left-control" v-on:click="lastSlide">&lt;</span>
+            <span class="gallery-slide-button gallery-right-control" v-on:click="nextSlide">&gt;</span>
 
-            <span class="blurb">
+            <span class="gallery-blurb">
                 {{ selected.blurb }}
             </span>
         </div>

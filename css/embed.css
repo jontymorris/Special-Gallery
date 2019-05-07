@@ -1,8 +1,4 @@
-.special-gallery {
-
-}
-
-.special-gallery .thumbnail {
+.special-gallery-item {
     width: 250px;
     height: 250px;
     margin: 5px;
@@ -11,14 +7,14 @@
     background: #6665652c;
 }
 
-.thumbnail img {
+.special-gallery-item img {
     width: 250px;
     height: 250px;
     max-width: 100%;
     max-height: 100%;
 }
 
-.image-container {
+.gallery-image-container {
     width: 80%;
     height: 90%;
     margin: auto;
@@ -27,11 +23,11 @@
     margin-bottom: 20px;
 }
 
-.image-container img {
+.gallery-image-container img {
     height: 100%;
 }
 
-.slide-button {
+.gallery-slide-button {
     cursor: pointer;
     padding: 10px;
     font-size: 60px;
@@ -41,39 +37,37 @@
     -moz-user-select: none;
 }
 
-.slide-button:active {
+.gallery-slide-button:active {
     background: #0000000e;
 }
 
-.left-control {
+.gallery-left-control {
     float: left;
 }
 
-.right-control {
+.gallery-right-control {
     float: right;
 }
 
-.blurb {
+.gallery-blurb {
     font-size: 25px;
 }
 
-/* The Modal (background) */
-.modal {
+.gallery-modal {
     display: block;
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
   }
 
-/* Modal Content */
-.modal-content {
+.gallery-modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -83,15 +77,14 @@
     text-align: center;
 }
 
-/* The Close Button */
-.close {
+.gallery-close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover, .close:focus {
+.gallery-close:hover, .gallery-close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;

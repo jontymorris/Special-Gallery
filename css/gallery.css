@@ -1,14 +1,14 @@
-.danger {
+.gallery-danger {
     color: #ffffff !important;
     background-color: #e03535 !important;
 }
 
-.right {
+.gallery-right {
     float: right;
     padding-right: 10px;
 }
 
-.click {
+.gallery-click {
     cursor: pointer;
 }
 
