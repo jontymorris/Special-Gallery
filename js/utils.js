@@ -17,6 +17,7 @@ function fetchItems() {
     });
 }
 
+
 /**
  * Saves the items on the server
  */
@@ -36,6 +37,7 @@ function saveItems(items) {
         });
     });
 }
+
 
 /**
  * Returns the image source
@@ -57,6 +59,7 @@ function getImageSource(id) {
     });
 }
 
+
 /**
  * Returns an image ID from the Wordpress gallery
  */
@@ -68,4 +71,39 @@ function pickImage() {
 
         wp.media.editor.open();
     });
+}
+
+
+class Touchy {
+    /**
+     * Used to capture click and drag events on an element.
+     */
+    constructor(className, clickCallback, dragCallback) {
+        this.mouseClick = false;
+        this.isDragging = false;
+
+        jQuery(className)
+            .mousedown(function() {
+                this.mouseClick = true;
+                this.isDragging = false;
+            })
+            .mousemove(function() {
+                if (this.mouseClick) {
+                    this.isDragging = true;
+                }
+            })
+            .mouseup(function(event) {
+                if (this.isDragging) {
+                    dragCallback();
+                } else {
+                    let id = event.target.getAttribute('gallery-id');
+
+                    if (id) {
+                        clickCallback(id);
+                    }
+                }
+            
+                this.mouseClick = false;
+            });
+    }
 }

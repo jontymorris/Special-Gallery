@@ -17,6 +17,15 @@
     }
 ?>
 
+<script>
+    jQuery(window).ready(function() {
+        // load the gallery
+        galleryApp.thumbnails = JSON.parse('<?php echo json_encode( $thumbnails ) ?>');
+        galleryApp.fullsize = JSON.parse('<?php echo json_encode( $fullsize ) ?>');
+        galleryApp.items = JSON.parse('<?php echo $data; ?>');
+    });
+</script>
+
 <div id="galleryApp">
 
     <div class="special-gallery">
@@ -44,17 +53,3 @@
     </div>
 
 </div>
-
-<!-- CSS -->
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url( 'special-gallery/css/embed.css' ) ?>">
-
-<!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="<?php echo plugins_url( 'special-gallery/js/frontend.js' ) ?>"></script>
-
-<script>
-    // load the gallery
-    galleryApp.thumbnails = JSON.parse('<?php echo json_encode( $thumbnails ) ?>');
-    galleryApp.fullsize = JSON.parse('<?php echo json_encode( $fullsize ) ?>');
-    galleryApp.items = JSON.parse('<?php echo $data; ?>');
-</script>
