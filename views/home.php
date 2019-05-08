@@ -9,7 +9,7 @@
     <div class="gallery-grid">
         <div class="gallery-item" v-for="(item, index) in items" :gallery-id="index">
             <div class="gallery-item-content">
-                <img class="gallery-thumbnail click" v-bind:src="getItemThumbnail(item)" :gallery-id="index">
+                <img class="gallery-thumbnail gallery-click" v-bind:src="getItemThumbnail(item)" :gallery-id="index">
             </div>
         </div>
     </div>
