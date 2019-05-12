@@ -10,3 +10,5 @@ A simple gallery plugin for Wordpress. It enables you to manage multiple galleri
 - Activate the plugin through Wordpress.
 
 After you have activated the plugin, click on 'Dashboard'. There will be a new menu option called 'Special Gallery'.
+
+<strong>Note:</strong> Don't embed multiple galleries on the same page. This will mess up the JavaScript causing the galleries to not show properly.
