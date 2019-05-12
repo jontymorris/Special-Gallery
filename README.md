@@ -1,17 +1,12 @@
 # What is this?
-A simple Wordpress plugin that adds a 'special gallery'.
+A simple gallery plugin for Wordpress. It enables you to manage multiple galleries and insert them into your website. Each gallery contains an array of items, that display in a grid, but expand into a unique slideshow when clicked.
 
-# How do I use it?
 
-- Drag the folder into the `wp-plugins` directory.
-- Create a `data` folder in the `special-gallery` folder.
-- (Optional) Create an `items.json` file in `data` that contains `[]`
+# How do I setup the plugin?
+- Clone the source from Github.
+- Drag the plugin folder into `wp-plugins`.
+- Create a `data` folder in `special-gallery`.
+- Then, create a `galleries.json` file in `data` that contains `[]`.
 - Activate the plugin through Wordpress.
 
-Afterwards, there will be a new menu option called 'Special Gallery'.
-You may need to click on 'Dashboard' to see it.
-
-By clicking on this menu item, you will be brought to the plugin control panel. When you're ready to use the gallery, insert the below shortcode into any page you want the gallery to appear.
-
-`[special-gallery]`
-
+After you have activated the plugin, click on 'Dashboard'. There will be a new menu option called 'Special Gallery'.
