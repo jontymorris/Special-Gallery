@@ -1,17 +1,16 @@
 <div id="galleryApp">
 
     <!-- Controls -->
-    <div id="gallery-options">
-        <div>
+    <div id="gallery-options" v-if="selected">
+        <div class="gallery-seperator">
             <button class="button" v-on:click="back">Back</button>
             <button class="button" v-on:click="newImage">Add image</button>
             <div class="gallery-right">
                 <button class="button gallery-danger" v-on:click="removeItem">Remove item</button>
             </div>
         </div>
-        <div>
-            <br>
-            <input class="gallery-input" placeholder="Enter the blurb here" v-if="selected" v-model="selected.blurb">
+        <div class="gallery-seperator">
+            <input class="gallery-input" placeholder="Enter the blurb here" v-model="selected.blurb">
         </div>
     </div>
 

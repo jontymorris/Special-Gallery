@@ -1,0 +1,19 @@
+<div id="galleriesApp">
+
+    <!-- Controls -->
+    <div id="gallery-gallery-options">
+        <div class="gallery-seperator">
+            <button class="button" v-on:click="newGallery">New Gallery</button>
+        </div>
+    </div>
+
+    <!-- Main grid -->
+    <div class="special-gallery">
+        <div class="special-gallery-item" v-for="gallery in galleries" v-on:click="galleryClick(gallery)">
+            <span>
+                {{ gallery.title }}
+            </span>
+        </div>
+    </div>
+
+</div>

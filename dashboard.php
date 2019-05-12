@@ -12,12 +12,12 @@ function gallery_dashboard() {
     wp_enqueue_media();
 
     if ( !isset( $_GET['gallery'] ) ) {
-        wp_enqueue_script( 'gallery-dashboard' );
-        include( plugin_dir_path( __FILE__ ) . 'views/dashboard.html' );
+        wp_enqueue_script( 'galleries' );
+        include( plugin_dir_path( __FILE__ ) . 'views/galleries.html' );
     }
 
     else if ( !isset( $_GET['item'] ) ) {
-        wp_enqueue_script( 'gallery-home' );
+        wp_enqueue_script( 'gallery' );
         include( plugin_dir_path( __FILE__ ) . 'views/gallery.html' );
     }
 

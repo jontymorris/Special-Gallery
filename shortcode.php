@@ -1,32 +1,50 @@
 <?php
 
 // Used to embed the gallery
-function gallery_embed() {
+function gallery_embed($atts) {
     // is the Elementor editor open?
     if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
         return;
     }
 
-    wp_enqueue_script( 'gallery-frontend' );
+    // parse the shortcode atts
+    $atts = shortcode_atts( array(
+        'id' => 0
+    ), $atts, 'special-gallery' );
 
-    // retrive the items
-    $data =  file_get_contents( plugin_dir_path( __FILE__ ) . 'data/items.json' );
-    $items = json_decode( $data );
+    // retrive the gallery
+    $data = file_get_contents( plugin_dir_path( __FILE__ ) . 'data/galleries.json' );
+    $galleries = json_decode( $data );
+    $gallery = $galleries[$atts['id']];
+
+    // check the gallery has items
+    if ( !array_key_exists( 'items', $gallery) ) {
+        return '';
+    }
 
     // retrive the thumbnails
     $thumbnails = array();
     $fullsize = array();
-    foreach ($items as $item) {
+    foreach ($gallery->items as $item) {
+        // does the item have any images?
+        if ( !array_key_exists( 'images', $item ) ) {
+            continue;
+        }
+
+        // loop through the item images
         foreach ($item->images as $image) {
+            // check if they have already been loaded
             if ( !array_key_exists( $image, $thumbnails) ) {
                 $thumbnails[$image] = wp_get_attachment_image_src( $image, 'thumbnail' )[0];
             }
-
             if ( !array_key_exists( $image, $fullsize) ) {
                 $fullsize[$image] = wp_get_attachment_image_src( $image, 'full' )[0];
             }
         }
     }
+
+    // enqueue the js
+    wp_enqueue_script( 'gallery-frontend' );
 
     // embed loading script
     ?> <script>
@@ -34,10 +52,11 @@ function gallery_embed() {
             // load the gallery
             galleryApp.thumbnails = JSON.parse('<?php echo json_encode( $thumbnails ) ?>');
             galleryApp.fullsize = JSON.parse('<?php echo json_encode( $fullsize ) ?>');
-            galleryApp.items = JSON.parse('<?php echo $data; ?>');
+            galleryApp.items = JSON.parse('<?php echo json_encode( $gallery->items ); ?>');
         });
     </script> <?php
 
+    // return the shortcode content
     return file_get_contents( plugin_dir_path( __FILE__ ) . 'views/shortcode.html' );
 }
 

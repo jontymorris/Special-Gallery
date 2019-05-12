@@ -1,10 +1,10 @@
 /**
- * Retrive the gallery items from Wordpress
+ * Retrive the galleries
  */
-function fetchItems() {
+function fetchGalleries() {
     return new Promise(function(resolve, reject) {
         let data = {
-            'action': 'get_items'
+            'action': 'get_galleries'
         }
 
         jQuery.post(ajaxurl, data, function(response) {
@@ -12,28 +12,68 @@ function fetchItems() {
                 resolve( JSON.parse(response.data) );
             }
 
-            reject('Failed to retrive items');
+            reject('Failed to retrive galleries');
         })
     });
 }
 
 
 /**
- * Saves the items on the server
+ * Retrives the gallery
  */
-function saveItems(items) {
+function fetchGallery(id) {
+    return new Promise(function(resolve, reject) {
+        fetchGalleries().then(function(galleries) {
+            if (id >= galleries.length) {
+                resolve({
+                    'title': 'Blank gallery',
+                    'items': []
+                });
+            }
+
+            resolve(galleries[id]);
+        }, function(error) {
+            reject(error);
+        });
+    }); 
+}
+
+
+/**
+ * Saves the galleries
+ */
+function saveGalleries(galleries) {
     return new Promise(function(resolve, reject) {
         let data = {
-            'action': 'save_items',
-            'items': items
+            'action': 'save_galleries',
+            'galleries': galleries
         };
 
         jQuery.post(ajaxurl, data, function(response) {
             if (response.success) {
-                resolve('Saved items successfully');
+                resolve('Saved galleries successfully');
             }
 
-            reject('Failed to save items');
+            reject('Failed to save galleries');
+        });
+    });
+}
+
+
+/**
+ * Saves the gallery 
+ */
+function saveGallery(gallery, id) {
+    return new Promise(function(resolve, reject) {
+        fetchGalleries().then(function(galleries) {
+            galleries[id] = gallery;
+            saveGalleries(galleries).then(function(success) {
+                resolve(success);
+            }, function(error) {
+                reject(error);
+            });
+        }, function(error) {
+            reject(error);
         });
     });
 }

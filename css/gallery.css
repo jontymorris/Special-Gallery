@@ -1,3 +1,7 @@
+.gallery-seperator {
+    margin-top: 10px;
+}
+
 .gallery-danger {
     color: #ffffff !important;
     background-color: #e03535 !important;

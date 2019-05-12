@@ -1,0 +1,30 @@
+[
+    {
+        "title": "Sweet gallery",
+        "items": [
+            {
+                "blurb": "Company logos",
+                "images": [
+                    "5",
+                    "20",
+                    "19"
+                ]
+            },
+            {
+                "blurb": "",
+                "images": [
+                    "18"
+                ]
+            },
+            {
+                "blurb": "",
+                "images": [
+                    "9"
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Gallery #2"
+    }
+]

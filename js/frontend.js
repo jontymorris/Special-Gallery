@@ -1,13 +1,13 @@
 const galleryApp = new Vue({
-    'el': '#galleryApp',
-    'data': {
+    el: '#galleryApp',
+    data: {
         items: [],
         thumbnails: {},
         fullsize: {},
         selected: null,
         slideIndex: 0
     },
-    'methods': {
+    methods: {
         itemClick: function(item) {
             this.selected = item;
         },

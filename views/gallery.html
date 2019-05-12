@@ -1,13 +1,25 @@
 <div id="galleryApp">
 
     <!-- Controls -->
-    <div id="gallery-gallery-options">
-        <button class="button" v-on:click="newItem">New item</button>
+    <div id="gallery-options" v-if="gallery">
+        <div class="gallery-seperator">
+            <button class="button" v-on:click="back">Back</button>
+            <button class="button" v-on:click="newItem">New item</button>
+            <div class="gallery-right">
+                <button class="button gallery-danger" v-on:click="removeGallery">Remove gallery</button>
+            </div>
+        </div>
+        <div class="gallery-seperator">
+            <input class="gallery-input" placeholder="Gallery title" v-model="gallery.title">
+        </div>
+        <div class="gallery-seperator">
+            <input readonly class="gallery-input" v-model="shortcode">
+        </div>
     </div>
 
     <!-- Main grid -->
-    <div class="gallery-grid">
-        <div class="gallery-item" v-for="(item, index) in items" :gallery-id="index">
+    <div class="gallery-grid" v-if="gallery">
+        <div class="gallery-item" v-for="(item, index) in gallery.items" :gallery-id="index">
             <div class="gallery-item-content">
                 <img class="gallery-thumbnail gallery-click" v-bind:src="getItemThumbnail(item)" :gallery-id="index">
             </div>

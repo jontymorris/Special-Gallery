@@ -13,8 +13,8 @@ function gallery_register_scripts() {
     wp_register_script( 'vue', 'https://cdn.jsdelivr.net/npm/vue', array(), null, true );
     
     wp_register_script( 'gallery-utils', plugins_url( '/js/utils.js' , __FILE__ ), array('jquery'), null, true );
-    wp_register_script( 'gallery-dashboard', plugins_url( '/js/dashboard.js' , __FILE__ ), array('vue', 'jquery', 'gallery-utils'), null, true );
-    wp_register_script( 'gallery-home', plugins_url( '/js/gallery.js' , __FILE__ ), array('vue', 'muuri', 'jquery', 'gallery-utils'), null, true );
+    wp_register_script( 'galleries', plugins_url( '/js/galleries.js' , __FILE__ ), array('vue', 'jquery', 'gallery-utils'), null, true );
+    wp_register_script( 'gallery', plugins_url( '/js/gallery.js' , __FILE__ ), array('vue', 'muuri', 'jquery', 'gallery-utils'), null, true );
     wp_register_script( 'gallery-item', plugins_url( '/js/item.js' , __FILE__ ), array('vue', 'muuri', 'jquery', 'gallery-utils'), null, true );
     wp_register_script( 'gallery-frontend', plugins_url( '/js/frontend.js' , __FILE__ ), array('vue', 'jquery'), null, true );
 }
