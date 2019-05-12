@@ -74,6 +74,20 @@ function pickImage() {
 }
 
 
+/**
+ * Checks if an item is in the local storage
+ */
+function isItemInStorage(key) {
+    if (key in window.localStorage) {
+        if (window.localStorage.getItem(key) !== 'undefined') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 class Touchy {
     /**
      * Used to capture click and drag events on an element.
