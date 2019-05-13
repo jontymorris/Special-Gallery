@@ -149,10 +149,6 @@ const itemApp = new Vue({
                     this.selected.images = this.getOrderedImages();
                 }
             }
-            
-            if (this.grid) {
-                this.grid.destroy(false);
-            }
 
             saveGallery(this.gallery, this.id).then(function() {
                 let url = new URL(window.location.href);
@@ -176,9 +172,6 @@ const itemApp = new Vue({
         },
         
         removeItem: function() {
-            this.grid.destroy(true);
-            this.grid = null;
-
             let index = this.gallery.items.indexOf(this.selected);
             if (index > -1) {
                 this.gallery.items.splice(index, 1);

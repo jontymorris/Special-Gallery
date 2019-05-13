@@ -126,7 +126,6 @@ const galleryApp = new Vue({
 
         back: function() {
             this.gallery.items = this.getOrderedItems();
-            this.grid.destroy(true);
 
             saveGallery(this.gallery, this.id).then(function() {
                 let url = new URL(window.location.href);
@@ -136,9 +135,6 @@ const galleryApp = new Vue({
         },
 
         removeGallery: function() {
-            this.grid.destroy(true);
-            this.grid = null;
-
             fetchGalleries().then(function(galleries) {
                 galleries.splice(galleryApp.id, 1);
                 saveGalleries(galleries).then(function(success) {
