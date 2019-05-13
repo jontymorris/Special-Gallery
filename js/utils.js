@@ -103,14 +103,12 @@ function getImageSource(id) {
 /**
  * Returns an image ID from the Wordpress gallery
  */
-function pickImage() {
-    return new Promise(function(resolve) {
-        wp.media.editor.send.attachment = function(props, attachment) {
-            resolve(attachment.id);
-        }
+function pickImage(callback) {
+    wp.media.editor.send.attachment = function(props, attachment) {
+        callback(attachment.id);
+    }
 
-        wp.media.editor.open();
-    });
+    wp.media.editor.open();
 }
 
 

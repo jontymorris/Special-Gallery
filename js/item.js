@@ -64,6 +64,14 @@ const itemApp = new Vue({
             });
         },
 
+        saveChanges: function() {
+            this.selected.images = this.getOrderedImages();
+
+            saveGallery(this.gallery, this.id).then(function(resolve) {
+                window.location.reload();
+            });
+        },
+
         getOrderedImages: function() {
             if (!this.grid) {
                 return [];
@@ -80,6 +88,11 @@ const itemApp = new Vue({
                 }
             });
 
+            let difference = this.selected.images.length - orderedImages.length;
+            if (difference > 0) {
+                orderedImages = orderedImages.concat(this.selected.images.splice(this.selected.images.length - difference));
+            }
+
             return orderedImages;
         },
         
@@ -95,44 +108,36 @@ const itemApp = new Vue({
         },
 
         newImage: function() {
-            pickImage().then(function(id) {
-                if (!itemApp.selected.images) {
-                    itemApp.selected.images = [];
-                }
+            pickImage(this.addImage);
+        },
 
-                // is the thumbnail in the cache?
-                if (id in itemApp.imageUrls) {
-                    if (itemApp.selected.images.length > 1) {
-                        itemApp.selected.images = itemApp.getOrderedImages();
-                    }
-                    
+        addImage: function(id) {
+            if (!itemApp.selected.images) {
+                itemApp.selected.images = [];
+            }
+
+            // is the thumbnail in the cache?
+            if (id in this.imageUrls) {
+                this.selected.images = this.getOrderedImages();
+                this.selected.images.push(id);
+                
+                this.refreshGrid();
+            }
+
+            // retrive the image source
+            else {
+                getImageSource(id).then(function(source) {
+                    itemApp.imageUrls[id] = source;
+                    itemApp.selected.images = itemApp.getOrderedImages();
                     itemApp.selected.images.push(id);
-                    
-                    saveGallery(itemApp.gallery, itemApp.id).then(function(resolve) {
-                        itemApp.refreshGrid();
-                    });
-                }
 
-                // retrive the image source
-                else {
-                    getImageSource(id).then(function(source) {
-                        itemApp.imageUrls[id] = source;
-                        window.localStorage.setItem('imageUrls', JSON.stringify(itemApp.imageUrls));
-                        
-                        if (itemApp.selected.images.length > 1) {
-                            itemApp.selected.images = itemApp.getOrderedImages();
-                        }
+                    window.localStorage.setItem('imageUrls', JSON.stringify(itemApp.imageUrls));
 
-                        itemApp.selected.images.push(id);
-                        
-                        saveGallery(itemApp.gallery, itemApp.id).then(function(resolve) {
-                            itemApp.refreshGrid();
-                        });
-                    }, function(reject) {
-                        console.error(reject);
-                    })
-                }
-            });
+                    itemApp.refreshGrid();
+                }, function(reject) {
+                    console.error(reject);
+                })
+            }
         },
         
         imageClick: function(image) {
@@ -144,17 +149,9 @@ const itemApp = new Vue({
         },
 
         back: function() {
-            if (this.selected) {
-                if (this.selected.images && this.selected.images.length > 1) {
-                    this.selected.images = this.getOrderedImages();
-                }
-            }
-
-            saveGallery(this.gallery, this.id).then(function() {
-                let url = new URL(window.location.href);
-                url.searchParams.delete('item');
-                window.location.href = url.href;
-            });
+            let url = new URL(window.location.href);
+            url.searchParams.delete('item');
+            window.location.href = url.href;
         },
 
         removeImage: function(image) {
@@ -163,11 +160,8 @@ const itemApp = new Vue({
             let index = this.selected.images.indexOf(image);
             if (index > -1) {
                 this.selected.images.splice(index, 1);
-
-                saveGallery(this.gallery, this.id).then(function(success) {
-                    itemApp.$forceUpdate();
-                    itemApp.refreshGrid();
-                });
+                itemApp.$forceUpdate();
+                itemApp.refreshGrid();
             }
         },
         
