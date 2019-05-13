@@ -65,6 +65,10 @@ const itemApp = new Vue({
         },
 
         saveChanges: function() {
+            if (!this.selected.images) {
+                return;
+            }
+
             this.selected.images = this.getOrderedImages();
 
             saveGallery(this.gallery, this.id).then(function(resolve) {
@@ -162,6 +166,10 @@ const itemApp = new Vue({
                 this.selected.images.splice(index, 1);
                 itemApp.$forceUpdate();
                 itemApp.refreshGrid();
+            }
+
+            if (this.selected.images.length == 0) {
+                this.saveChanges();
             }
         },
         
