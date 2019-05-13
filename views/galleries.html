@@ -8,8 +8,8 @@
     </div>
 
     <!-- Main grid -->
-    <div class="special-gallery">
-        <div class="special-gallery-item" v-for="gallery in galleries" v-on:click="galleryClick(gallery)">
+    <div>
+        <div class="galleries-item" v-for="gallery in galleries" v-on:click="galleryClick(gallery)">
             <span>
                 {{ gallery.title }}
             </span>

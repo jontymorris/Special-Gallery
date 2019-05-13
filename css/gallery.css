@@ -1,3 +1,14 @@
+.galleries-item {
+    display: inline-block;
+    margin: 10px;
+    padding: 30px;
+    width: 200px;
+    background: #b9b9b9;
+    cursor: pointer;
+    font-size: 2em;
+    line-height: 2em;
+}
+
 .gallery-seperator {
     margin-top: 10px;
 }
