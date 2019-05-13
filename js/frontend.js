@@ -2,14 +2,15 @@ const galleryApp = new Vue({
     el: '#galleryApp',
     data: {
         items: [],
-        thumbnails: {},
-        fullsize: {},
+        imageUrls: {},
         selected: null,
         slideIndex: 0
     },
     methods: {
         itemClick: function(item) {
-            this.selected = item;
+            if (item.images) {
+                this.selected = item;
+            }
         },
 
         close: function() {
@@ -45,6 +46,18 @@ const galleryApp = new Vue({
             else if (this.slideIndex >= count) {
                 this.slideIndex = 0;
             }
-        }
+        },
+
+        getItemThumbnail: function(item) {
+            if (item.images && item.images.length > 0) {
+                let id = item.images[0];
+
+                if (id in this.imageUrls) {
+                    return this.imageUrls[id];
+                }
+            }
+
+            return '';
+        },
     }
 });

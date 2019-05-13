@@ -2,7 +2,7 @@
 
     <div class="special-gallery">
         <div class="special-gallery-item" v-for="item in items">
-            <img :src="thumbnails[item.images[0]]" v-on:click="itemClick(item)">
+            <img :src="getItemThumbnail(item)" v-on:click="itemClick(item)">
         </div>
     </div>
 
@@ -12,7 +12,7 @@
             <span class="gallery-close" v-on:click="close">&times;</span>
 
             <div class="gallery-image-container">
-                <img :src="fullsize[selected.images[slideIndex]]">
+                <img :src="imageUrls[selected.images[slideIndex]]">
             </div>
             
             <span class="gallery-slide-button gallery-left-control" v-on:click="lastSlide">&lt;</span>

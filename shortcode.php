@@ -23,8 +23,7 @@ function gallery_embed($atts) {
     }
 
     // retrive the thumbnails
-    $thumbnails = array();
-    $fullsize = array();
+    $image_urls = array();
     foreach ($gallery->items as $item) {
         // does the item have any images?
         if ( !array_key_exists( 'images', $item ) ) {
@@ -34,11 +33,8 @@ function gallery_embed($atts) {
         // loop through the item images
         foreach ($item->images as $image) {
             // check if they have already been loaded
-            if ( !array_key_exists( $image, $thumbnails) ) {
-                $thumbnails[$image] = wp_get_attachment_image_src( $image, 'thumbnail' )[0];
-            }
-            if ( !array_key_exists( $image, $fullsize) ) {
-                $fullsize[$image] = wp_get_attachment_image_src( $image, 'full' )[0];
+            if ( !array_key_exists( $image, $image_urls) ) {
+                $image_urls[$image] = wp_get_attachment_image_src( $image, 'full' )[0];
             }
         }
     }
@@ -50,8 +46,7 @@ function gallery_embed($atts) {
     ?> <script>
         jQuery(window).ready(function() {
             // load the gallery
-            galleryApp.thumbnails = JSON.parse('<?php echo json_encode( $thumbnails ) ?>');
-            galleryApp.fullsize = JSON.parse('<?php echo json_encode( $fullsize ) ?>');
+            galleryApp.imageUrls = JSON.parse('<?php echo json_encode( $image_urls ) ?>');
             galleryApp.items = JSON.parse('<?php echo json_encode( $gallery->items ); ?>');
         });
     </script> <?php
