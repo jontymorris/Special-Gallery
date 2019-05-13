@@ -122,6 +122,8 @@ const itemApp = new Vue({
                         if (itemApp.selected.images.length > 1) {
                             itemApp.selected.images = itemApp.getOrderedImages();
                         }
+
+                        itemApp.selected.images.push(id);
                         
                         saveGallery(itemApp.gallery, itemApp.id).then(function(resolve) {
                             itemApp.refreshGrid();
