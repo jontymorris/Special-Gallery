@@ -1,11 +1,15 @@
 const itemApp = new Vue({
     el: '#galleryApp',
     data: {
+        imageUrls: {},
+
         id: 0,
         gallery: null,
         selected: null,
-        imageUrls: {},
-        grid: null
+
+        grid: null,
+
+        isChanged: false
     },
     created() {
         // load cached data
@@ -116,6 +120,8 @@ const itemApp = new Vue({
         },
 
         addImage: function(id) {
+            this.isChanged = true;
+
             if (!itemApp.selected.images) {
                 itemApp.selected.images = [];
             }
@@ -149,7 +155,7 @@ const itemApp = new Vue({
         },
 
         imageDrag: function() {
-
+            this.isChanged = true;
         },
 
         back: function() {
@@ -159,6 +165,8 @@ const itemApp = new Vue({
         },
 
         removeImage: function(image) {
+            this.isChanged = true;
+
             this.selected.images = this.getOrderedImages();
 
             let index = this.selected.images.indexOf(image);

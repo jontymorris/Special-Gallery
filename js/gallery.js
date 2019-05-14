@@ -1,10 +1,14 @@
 const galleryApp = new Vue({
     el: '#galleryApp',
     data: {
+        imageUrls: {},
+
         id: 0,
         gallery: null,
-        imageUrls: {},
-        grid: null
+        
+        grid: null,
+
+        isChanged: false
     },
     created() {
         // load cached data
@@ -88,6 +92,8 @@ const galleryApp = new Vue({
         },
 
         newItem: function() {
+            this.isChanged = true;
+
             this.gallery.items = this.getOrderedItems();
             this.gallery.items.push(
                 {
@@ -121,7 +127,7 @@ const galleryApp = new Vue({
         },
 
         itemDrag: function() {
-            
+            this.isChanged = true;
         },
 
         back: function() {

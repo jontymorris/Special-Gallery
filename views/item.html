@@ -5,7 +5,7 @@
         <div class="gallery-seperator">
             <button class="button" v-on:click="back">Back</button>
             <button class="button" v-on:click="newImage">Add image</button>
-            <button class="button gallery-important" v-on:click="saveChanges">Save changes</button>
+            <button class="button" v-bind:class="{ 'gallery-important': isChanged }" v-on:click="saveChanges">Save changes</button>
             <div class="gallery-right">
                 <button class="button gallery-danger" v-on:click="removeItem">Remove item</button>
             </div>
