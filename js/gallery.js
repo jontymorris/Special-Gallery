@@ -57,9 +57,14 @@ const galleryApp = new Vue({
         },
 
         saveChanges: function() {
+            if (!this.gallery.items) {
+                this.gallery.items = [];
+            }
+
+            this.gallery.items = this.getOrderedItems();
+
             saveGallery(this.gallery, this.id).then(function(success) {
-                galleryApp.$forceUpdate();
-                galleryApp.refreshGrid();
+                window.location.reload();
             });
         },
 

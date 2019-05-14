@@ -66,7 +66,7 @@ const itemApp = new Vue({
 
         saveChanges: function() {
             if (!this.selected.images) {
-                return;
+                this.selected.images = [];
             }
 
             this.selected.images = this.getOrderedImages();
