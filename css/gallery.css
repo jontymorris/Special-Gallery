@@ -3,10 +3,18 @@
     margin: 10px;
     padding: 30px;
     width: 200px;
-    background: #b9b9b9;
+    color: #ffffff;
     cursor: pointer;
     font-size: 2em;
     line-height: 2em;
+}
+
+.galleries-item:nth-child(even) {
+    background-color: #331c1ce5;
+}
+
+.galleries-item:nth-child(odd) {
+    background-color: #362b2b;
 }
 
 .gallery-seperator {
