@@ -56,6 +56,13 @@ const galleryApp = new Vue({
             });
         },
 
+        saveChanges: function() {
+            saveGallery(this.gallery, this.id).then(function(success) {
+                galleryApp.$forceUpdate();
+                galleryApp.refreshGrid();
+            });
+        },
+
         getOrderedItems: function() {
             if (!this.grid) {
                 return [];
@@ -84,10 +91,7 @@ const galleryApp = new Vue({
                 }
             );
 
-            saveGallery(this.gallery, this.id).then(function(success) {
-                galleryApp.$forceUpdate();
-                galleryApp.refreshGrid();
-            });
+            this.refreshGrid();
         },
 
         getItemThumbnail: function(item) {
@@ -106,32 +110,19 @@ const galleryApp = new Vue({
             let clicked = this.gallery.items[id];
             this.gallery.items = this.getOrderedItems();
 
-            saveGallery(this.gallery, this.id).then(function() {
-                let url = new URL(window.location.href);
-                url.searchParams.set('item', galleryApp.gallery.items.indexOf(clicked));
-                window.location.href = url.href;
-            });
+            let url = new URL(window.location.href);
+            url.searchParams.set('item', galleryApp.gallery.items.indexOf(clicked));
+            window.location.href = url.href;
         },
 
         itemDrag: function() {
-            let orderedItems = this.getOrderedItems();
-
-            let newGallery = {
-                title: galleryApp.gallery.title,
-                items: orderedItems
-            }
-
-            saveGallery(newGallery, this.id);
+            
         },
 
         back: function() {
-            this.gallery.items = this.getOrderedItems();
-
-            saveGallery(this.gallery, this.id).then(function() {
-                let url = new URL(window.location.href);
-                url.searchParams.delete('gallery');
-                window.location.href = url.href;
-            });
+            let url = new URL(window.location.href);
+            url.searchParams.delete('gallery');
+            window.location.href = url.href;
         },
 
         removeGallery: function() {
