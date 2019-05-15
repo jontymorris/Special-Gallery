@@ -26,6 +26,13 @@ const itemApp = new Vue({
 
             if (itemApp.gallery.items) {
                 itemApp.selected = itemApp.gallery.items[url.searchParams.get('item')];
+
+                if (!itemApp.selected) {
+                    itemApp.selected = [];
+                    url.searchParams.delete('item');
+                    window.location.href = url.href;
+                }
+
                 itemApp.refreshGrid();
             } else {
                 itemApp.gallery.items = [
