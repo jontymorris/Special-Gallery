@@ -52,6 +52,7 @@
 .gallery-remove {
     position: absolute;
     z-index: 1;
+    top: 0px;
     right: 10px;
     cursor: pointer;
     padding: 10px;
