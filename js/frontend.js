@@ -28,6 +28,27 @@ const galleryApp = new Vue({
             this.checkIndex();
         },
 
+        previewClick: function(index) {
+            this.slideIndex = index;
+            this.checkIndex();
+        },
+
+        centerPreview: function() {
+            let position = this.slideIndex * 130;
+            let screenWidth = jQuery(window).width();
+
+            // does it need centering?
+            if (position > screenWidth/2) {
+                jQuery('.gallery-preview').animate({
+                    'margin-left': '-' + (position/2) + 'px'
+                });
+            } else {
+                jQuery('.gallery-preview').animate({
+                    'margin-left': '0px'
+                });
+            }
+        },
+
         checkIndex: function() {
             if (!this.selected) {
                 return;
@@ -46,6 +67,8 @@ const galleryApp = new Vue({
             else if (this.slideIndex >= count) {
                 this.slideIndex = 0;
             }
+            
+            this.centerPreview();
         },
 
         getItemThumbnail: function(item) {

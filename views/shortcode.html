@@ -31,6 +31,14 @@
                 {{ selected.blurb }}
             </span>
         </div>
+
+        <div class="gallery-preview">
+            <img
+                :src="imageUrls[image]"
+                v-for="(image, index) in selected.images"
+                v-on:click="previewClick(index)"
+                v-bind:class="{ 'selected-preview': index == slideIndex }">
+        </div>
     </div>
 
 </div>

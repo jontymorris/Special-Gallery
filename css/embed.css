@@ -1,3 +1,23 @@
+.gallery-preview {
+    width: auto;
+    height: 150px;
+    display: flex;
+    margin-top: 50px;
+    background: #00000075;
+    overflow: hidden;
+}
+
+.gallery-preview img {
+    margin: 10px;
+    max-width: 120px;
+    cursor: pointer;
+    display: inline;
+}
+
+.selected-preview {
+    border: 3px solid #1984e9;
+}
+
 .special-gallery-item {
     width: 250px;
     height: 250px;
@@ -70,7 +90,7 @@
 .gallery-modal-content {
     margin: auto;
     width: 80%;
-    height: 80vh;
+    height: 60vh;
     text-align: center;
 }
 
