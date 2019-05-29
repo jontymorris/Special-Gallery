@@ -121,9 +121,11 @@ const galleryApp = new Vue({
             let clicked = this.gallery.items[id];
             this.gallery.items = this.getOrderedItems();
 
-            let url = new URL(window.location.href);
-            url.searchParams.set('item', galleryApp.gallery.items.indexOf(clicked));
-            window.location.href = url.href;
+            saveGallery(this.gallery, this.id).then(function(success) {
+                let url = new URL(window.location.href);
+                url.searchParams.set('item', galleryApp.gallery.items.indexOf(clicked));
+                window.location.href = url.href;
+            });
         },
 
         itemDrag: function() {
