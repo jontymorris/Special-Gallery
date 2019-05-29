@@ -1,3 +1,12 @@
+#galleryApp {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.special-gallery {
+    width: 100%;
+}
+
 .gallery-preview {
     left: 0px;
     width: auto;
@@ -20,19 +29,13 @@
 }
 
 .special-gallery-item {
-    width: 250px;
-    height: 250px;
     margin: 5px;
     cursor: pointer;
     display: inline-block;
-    background: #6665652c;
 }
 
 .special-gallery-item img {
-    width: 250px;
-    height: 250px;
-    max-width: 100%;
-    max-height: 100%;
+    max-height: 250px;
 }
 
 .gallery-image-container {
