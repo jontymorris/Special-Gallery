@@ -1,7 +1,8 @@
 .gallery-preview {
+    left: 0px;
     width: auto;
-    height: 150px;
-    display: flex;
+    height: 170px;
+    display: block;
     margin-top: 50px;
     background: #00000075;
     overflow: hidden;
@@ -9,7 +10,7 @@
 
 .gallery-preview img {
     margin: 10px;
-    max-width: 120px;
+    max-height: 150px;
     cursor: pointer;
     display: inline;
 }

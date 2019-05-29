@@ -34,19 +34,29 @@ const galleryApp = new Vue({
         },
 
         centerPreview: function() {
-            let position = this.slideIndex * 130;
-            let screenWidth = jQuery(window).width();
-
-            // does it need centering?
-            if (position > screenWidth/2) {
-                jQuery('.gallery-preview').animate({
-                    'margin-left': '-' + (position/2) + 'px'
-                });
-            } else {
-                jQuery('.gallery-preview').animate({
-                    'margin-left': '0px'
-                });
+            let images = jQuery('.gallery-preview img');
+            let element = images[this.slideIndex];
+            
+            let position = 0;
+            for (let i=0; i<this.slideIndex; i++) {
+                position += jQuery(images[i]).outerWidth();
+                position += 20;
             }
+
+            let halfWindowWidth = jQuery(window).width() / 2;
+            
+            if (position < halfWindowWidth) {
+                jQuery('.gallery-preview').animate({ 'margin-left': '0px' });
+                return;
+            };
+
+            position += jQuery(element).outerWidth()/2; 
+            position -= halfWindowWidth;
+
+            position = -position;
+            position = parseInt(position) + 'px';
+
+            jQuery('.gallery-preview').animate({ 'margin-left': position });
         },
 
         checkIndex: function() {
