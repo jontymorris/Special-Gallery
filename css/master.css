@@ -29,21 +29,13 @@
   display: block;
   position: fixed;
   z-index: 1;
-  padding-top: 100px;
+  padding-top: 10px;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #000000c5; }
-  @media screen and (max-width: 500px) {
-    .gallery-modal {
-      padding-top: 10px; } }
-  .gallery-modal .gallery-modal-content {
-    margin: auto;
-    width: 100%;
-    padding: 10px;
-    text-align: center; }
+  background-color: #000000d2; }
   .gallery-modal .gallery-close {
     position: absolute;
     top: 10px;
@@ -118,12 +110,18 @@
 #galleryApp {
   width: 100% !important;
   max-width: 100% !important;
-  color: #d8d8d8; }
+  color: #DEDEDE; }
   #galleryApp .special-gallery {
     width: 100%; }
+  #galleryApp .gallery-content {
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    bottom: 0px; }
   #galleryApp .gallery-image-container {
-    max-width: 1280px;
+    height: 70vh;
     margin: auto;
+    margin-bottom: 20px;
     overflow-y: hidden;
     background-repeat: no-repeat;
     background-position: center center;
@@ -134,11 +132,6 @@
     @media screen and (max-height: 500px) {
       #galleryApp .gallery-image-container {
         height: 50vh; } }
-  #galleryApp .gallery-footer {
-    overflow: hidden;
-    width: 100%;
-    position: absolute;
-    bottom: 0px; }
   #galleryApp .gallery-preview {
     height: 120px;
     background: #00000075;
@@ -170,6 +163,8 @@
     background-color: #242424;
     user-select: none;
     -moz-user-select: none; }
+    #galleryApp .gallery-slide-button svg path {
+      fill: #DEDEDE; }
     #galleryApp .gallery-slide-button:active {
       background: #63363662; }
     @media screen and (max-width: 720px) {
@@ -180,12 +175,23 @@
     float: left; }
   #galleryApp .gallery-right-control {
     float: right; }
+  #galleryApp .gallery-name {
+    width: 100%;
+    line-height: 24px;
+    font-size: 25px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #DEDEDE;
+    font-family: 'Raleway', sans-serif;
+    text-align: center; }
   #galleryApp .gallery-blurb {
     width: 100%;
     text-align: center;
-    font-size: 25px; }
-    @media screen and (max-width: 720px) {
-      #galleryApp .gallery-blurb {
-        font-size: 16px; } }
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 5px; }
 
 /*# sourceMappingURL=master.css.map */

@@ -2,24 +2,13 @@
     display: block;
     position: fixed;
     z-index: 1;
-    padding-top: 100px;
+    padding-top: 10px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: #000000c5;
-
-    @media screen and (max-width: 500px) {
-        padding-top: 10px;
-    }
-
-    .gallery-modal-content {
-        margin: auto;
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-    }
+    background-color: #000000d2;
     
     .gallery-close {
         position: absolute;
