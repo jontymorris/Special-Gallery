@@ -97,6 +97,7 @@ const galleryApp = new Vue({
             this.gallery.items = this.getOrderedItems();
             this.gallery.items.push(
                 {
+                    'name': '',
                     'blurb': '',
                     'images': []
                 }

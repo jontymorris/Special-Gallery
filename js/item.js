@@ -37,6 +37,7 @@ const itemApp = new Vue({
             } else {
                 itemApp.gallery.items = [
                     {
+                        'name': '',
                         'blurb': '',
                         'images': []
                     }
