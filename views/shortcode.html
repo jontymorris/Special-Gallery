@@ -12,32 +12,31 @@
             <span class="gallery-close" v-on:click="close">&times;</span>
 
             <div class="gallery-image-container">
-                <img :src="imageUrls[selected.images[slideIndex]]">
+                <span class="gallery-slide-button gallery-left-control" v-on:click="lastSlide">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M11.28 15.7l-1.34 1.37L5 12l4.94-5.07 1.34 1.38-2.68 2.72H19v1.94H8.6z"></path>
+                    </svg>
+                </span>
+            
+                <span class="gallery-slide-button gallery-right-control" v-on:click="nextSlide">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M15.4 12.97l-2.68 2.72 1.34 1.38L19 12l-4.94-5.07-1.34 1.38 2.68 2.72H5v1.94z"></path>
+                    </svg>
+                </span>
             </div>
-            
-            <span class="gallery-slide-button gallery-left-control" v-on:click="lastSlide">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M11.28 15.7l-1.34 1.37L5 12l4.94-5.07 1.34 1.38-2.68 2.72H19v1.94H8.6z"></path>
-                </svg>
-            </span>
-            
-            <span class="gallery-slide-button gallery-right-control" v-on:click="nextSlide">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M15.4 12.97l-2.68 2.72 1.34 1.38L19 12l-4.94-5.07-1.34 1.38 2.68 2.72H5v1.94z"></path>
-                </svg>
-            </span>
-
-            <span class="gallery-blurb">
-                {{ selected.blurb }}
-            </span>
         </div>
 
-        <div class="gallery-preview">
-            <img
-                :src="imageUrls[image]"
-                v-for="(image, index) in selected.images"
-                v-on:click="previewClick(index)"
-                v-bind:class="{ 'selected-preview': index == slideIndex }">
+        <div class="gallery-footer">
+            <div class="gallery-blurb">
+                {{ selected.blurb }}
+            </div>
+            <div class="gallery-preview">
+                <img
+                    :src="imageUrls[image]"
+                    v-for="(image, index) in selected.images"
+                    v-on:click="previewClick(index)"
+                    v-bind:class="{ 'selected-preview': index == slideIndex }">
+            </div>
         </div>
     </div>
 

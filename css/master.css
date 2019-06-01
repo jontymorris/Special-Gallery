@@ -1,0 +1,191 @@
+.gallery-grid {
+  position: relative; }
+
+.gallery-item {
+  display: block;
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  margin: 5px;
+  z-index: 1;
+  background: #464646;
+  color: #fff; }
+
+.gallery-item.muuri-item-dragging {
+  z-index: 3; }
+
+.gallery-item.muuri-item-releasing {
+  z-index: 2; }
+
+.gallery-item.muuri-item-hidden {
+  z-index: 0; }
+
+.gallery-item-content {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+.gallery-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #000000c5; }
+  @media screen and (max-width: 500px) {
+    .gallery-modal {
+      padding-top: 10px; } }
+  .gallery-modal .gallery-modal-content {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: center; }
+  .gallery-modal .gallery-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 15px;
+    background-color: #242424; }
+    .gallery-modal .gallery-close:hover, .gallery-modal .gallery-close:focus {
+      background: #6b6b6b62; }
+    @media screen and (max-width: 720px) {
+      .gallery-modal .gallery-close {
+        font-size: 16px;
+        padding: 2px 10px; } }
+
+.galleries-item {
+  display: inline-block;
+  margin: 10px;
+  padding: 30px;
+  width: 200px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 2em;
+  line-height: 2em; }
+
+.galleries-item:nth-child(even) {
+  background-color: #331c1ce5; }
+
+.galleries-item:nth-child(odd) {
+  background-color: #362b2b; }
+
+.gallery-seperator {
+  margin-top: 10px; }
+
+.gallery-important {
+  color: #ffffff !important;
+  background-color: #2e8bf6 !important; }
+
+.gallery-danger {
+  color: #ffffff !important;
+  background-color: #e03535 !important; }
+
+.gallery-right {
+  float: right;
+  padding-right: 10px; }
+
+.gallery-click {
+  cursor: pointer; }
+
+#gallery-options {
+  padding: 10px 0px 10px 0px; }
+
+.gallery-thumbnail {
+  width: 100%;
+  height: 100%; }
+
+.gallery-remove {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  right: 10px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 25px; }
+
+.gallery-input {
+  width: 100%;
+  max-width: 500px; }
+
+#galleryApp {
+  width: 100% !important;
+  max-width: 100% !important;
+  color: #d8d8d8; }
+  #galleryApp .special-gallery {
+    width: 100%; }
+  #galleryApp .gallery-image-container {
+    max-width: 1280px;
+    margin: auto;
+    overflow-y: hidden;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50%; }
+    @media screen and (max-height: 720px) {
+      #galleryApp .gallery-image-container {
+        height: 80vh; } }
+    @media screen and (max-height: 500px) {
+      #galleryApp .gallery-image-container {
+        height: 50vh; } }
+  #galleryApp .gallery-footer {
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    bottom: 0px; }
+  #galleryApp .gallery-preview {
+    height: 120px;
+    background: #00000075;
+    overflow: hidden; }
+    @media screen and (max-width: 720px) {
+      #galleryApp .gallery-preview {
+        height: 70px; } }
+    #galleryApp .gallery-preview img {
+      margin: 10px;
+      max-height: 100px;
+      cursor: pointer;
+      display: inline; }
+      @media screen and (max-width: 720px) {
+        #galleryApp .gallery-preview img {
+          max-height: 50px; } }
+  #galleryApp .selected-preview {
+    border: 3px solid #1984e9; }
+  #galleryApp .special-gallery-item {
+    margin: 5px;
+    cursor: pointer;
+    display: inline-block; }
+    #galleryApp .special-gallery-item img {
+      max-height: 250px; }
+  #galleryApp .gallery-slide-button {
+    margin-top: 40vh;
+    max-width: 60px;
+    cursor: pointer;
+    padding: 10px 10px 0px 10px;
+    background-color: #242424;
+    user-select: none;
+    -moz-user-select: none; }
+    #galleryApp .gallery-slide-button:active {
+      background: #63363662; }
+    @media screen and (max-width: 720px) {
+      #galleryApp .gallery-slide-button {
+        padding: 5px 5px 0px 5px;
+        width: 30px; } }
+  #galleryApp .gallery-left-control {
+    float: left; }
+  #galleryApp .gallery-right-control {
+    float: right; }
+  #galleryApp .gallery-blurb {
+    width: 100%;
+    text-align: center;
+    font-size: 25px; }
+    @media screen and (max-width: 720px) {
+      #galleryApp .gallery-blurb {
+        font-size: 16px; } }
+
+/*# sourceMappingURL=master.css.map */

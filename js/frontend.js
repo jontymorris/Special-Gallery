@@ -4,12 +4,17 @@ const galleryApp = new Vue({
         items: [],
         imageUrls: {},
         selected: null,
-        slideIndex: 0
+        slideIndex: 0,
+        currentImage: ''
     },
     methods: {
         itemClick: function(item) {
             if (item.images) {
                 this.selected = item;
+
+                this.$nextTick(function() {
+                    this.updateImage();
+                });
             }
         },
 
@@ -45,7 +50,7 @@ const galleryApp = new Vue({
 
             let halfWindowWidth = jQuery(window).width() / 2;
             
-            if (position < halfWindowWidth) {
+            if (position + jQuery(element).outerWidth()/2 < halfWindowWidth) {
                 jQuery('.gallery-preview').animate({ 'margin-left': '0px' });
                 return;
             };
@@ -57,6 +62,14 @@ const galleryApp = new Vue({
             position = parseInt(position) + 'px';
 
             jQuery('.gallery-preview').animate({ 'margin-left': position });
+        },
+
+        updateImage: function() {
+            let imageUrl = this.imageUrls[this.selected.images[this.slideIndex]];
+
+            jQuery('.gallery-image-container').css({
+                'background-image': 'url(' + imageUrl + ')'
+            });
         },
 
         checkIndex: function() {
@@ -77,7 +90,8 @@ const galleryApp = new Vue({
             else if (this.slideIndex >= count) {
                 this.slideIndex = 0;
             }
-            
+
+            this.updateImage();
             this.centerPreview();
         },
 
@@ -94,3 +108,11 @@ const galleryApp = new Vue({
         },
     }
 });
+
+window.addEventListener('load', function() {
+    jQuery(document).keyup(function(event) {
+        if (event.key === 'Escape') {
+            galleryApp.close();
+        }
+    })
+})

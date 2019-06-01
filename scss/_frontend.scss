@@ -1,0 +1,106 @@
+#galleryApp {
+    width: 100% !important;
+    max-width: 100% !important;
+    color: #d8d8d8;
+
+    .special-gallery {
+        width: 100%;
+    }
+    
+    .gallery-image-container {
+        max-width: 1280px;
+        margin: auto;
+        overflow-y: hidden;
+
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 50%;
+
+        @media screen and (max-height: 720px) {
+            height: 80vh;
+        }
+
+        @media screen and (max-height: 500px) {
+            height: 50vh;
+        }
+    }
+
+    .gallery-footer {
+        overflow: hidden;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .gallery-preview {
+        height: 120px;
+        background: #00000075;
+        overflow: hidden;
+
+        @media screen and (max-width: 720px) {
+            height: 70px;
+        }
+
+        img {
+            margin: 10px;
+            max-height: 100px;
+            cursor: pointer;
+            display: inline;
+
+            @media screen and (max-width: 720px) {
+                max-height: 50px;
+            }
+        }
+    }
+
+    .selected-preview {
+        border: 3px solid #1984e9;
+    }
+
+    .special-gallery-item {
+        margin: 5px;
+        cursor: pointer;
+        display: inline-block;
+
+        img {
+            max-height: 250px;
+        }
+    }
+
+    .gallery-slide-button {
+        margin-top: 40vh;
+        max-width: 60px;
+        cursor: pointer;
+        padding: 10px 10px 0px 10px;
+        background-color: #242424;
+        user-select: none;
+        -moz-user-select: none;
+
+        &:active {
+            background: #63363662;
+        }
+
+        @media screen and (max-width: 720px) {
+            padding: 5px 5px 0px 5px;
+            width: 30px;
+        }
+    }
+
+    .gallery-left-control {
+        float: left;
+    }
+    
+    .gallery-right-control {
+        float: right;
+    }
+
+    .gallery-blurb {
+        width: 100%;
+        text-align: center;
+        font-size: 25px;
+
+        @media screen and (max-width: 720px) {
+            font-size: 16px;
+        }
+    }
+}

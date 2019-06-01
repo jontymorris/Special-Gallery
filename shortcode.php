@@ -42,14 +42,15 @@ function gallery_embed($atts) {
     // enqueue the js
     wp_enqueue_script( 'gallery-frontend' );
 
-    // embed loading script
-    ?> <script>
-        jQuery(window).ready(function() {
-            // load the gallery
-            galleryApp.imageUrls = JSON.parse('<?php echo json_encode( $image_urls ) ?>');
-            galleryApp.items = JSON.parse('<?php echo json_encode( $gallery->items ); ?>');
-        });
-    </script> <?php
+    ?>
+        <!-- Loading script -->
+        <script>
+            window.addEventListener('load', function() {
+                galleryApp.imageUrls = JSON.parse('<?php echo json_encode( $image_urls ) ?>');
+                galleryApp.items = JSON.parse('<?php echo json_encode( $gallery->items ); ?>');
+            });
+        </script>
+    <?php
 
     // return the shortcode content
     return file_get_contents( plugin_dir_path( __FILE__ ) . 'views/shortcode.html' );
