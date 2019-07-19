@@ -3,6 +3,7 @@ A simple gallery plugin for Wordpress. It enables you to manage multiple galleri
 
 
 # How do I setup the plugin?
+- Install the Elementor plugin.
 - Clone the source from Github.
 - Drag the plugin folder into `wp-plugins`.
 - Create a `data` folder in `special-gallery`.
