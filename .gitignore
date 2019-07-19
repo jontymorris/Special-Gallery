@@ -1,5 +1,6 @@
 data/galleries.json
 .sass-cache
+.sass-cache/*
 
 *.log
 wp-config.php
