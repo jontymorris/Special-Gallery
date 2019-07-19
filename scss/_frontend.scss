@@ -23,12 +23,12 @@
         background-position: center center;
         background-size: 50%;
 
-        @media screen and (max-height: 720px) {
-            height: 80vh;
+        @media screen and (max-height: 750px) {
+            height: 50vh;
         }
 
-        @media screen and (max-height: 500px) {
-            height: 50vh;
+        @media screen and (max-height: 600px) {
+            height: 30vh;
         }
     }
 
@@ -84,6 +84,10 @@
             background: #63363662;
         }
 
+        @media screen and (max-height: 740px) {
+            margin-top: 20vh;
+        }
+
         @media screen and (max-width: 720px) {
             padding: 5px 5px 0px 5px;
             width: 30px;
@@ -99,6 +103,7 @@
     }
 
     .gallery-name {
+        padding: 0px 5px;
         width: 100%;
         line-height: 24px;
         font-size: 25px;
@@ -111,6 +116,7 @@
     }
 
     .gallery-blurb {
+        padding: 0px 5px;
         width: 100%;
         text-align: center;
         font-family: 'Raleway', sans-serif;
@@ -118,5 +124,14 @@
         font-size: 16px;
         line-height: 20px;
         margin-bottom: 5px;
+        min-height: 40px;
+
+        @media screen and (max-height: 750px) {
+            margin-bottom: 15vh;
+        }
+
+        @media screen and (max-height: 600px) {
+            margin-bottom: 10vh;
+        }
     }
 }
