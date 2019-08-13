@@ -66,10 +66,7 @@ const galleryApp = new Vue({
 
         updateImage: function() {
             let imageUrl = this.imageUrls[this.selected.images[this.slideIndex]];
-
-            jQuery('.gallery-image-container').css({
-                'background-image': 'url(' + imageUrl + ')'
-            });
+            jQuery('#gallery-image').attr('src', imageUrl);
         },
 
         checkIndex: function() {

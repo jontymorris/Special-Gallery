@@ -15,6 +15,7 @@
     }
     
     .gallery-image-container {
+        text-align: center;
         height: 70vh;
         margin: auto;
         margin-bottom: 20px;
@@ -30,6 +31,12 @@
         @media screen and (max-height: 600px) {
             height: 30vh;
         }
+    }
+
+    #gallery-image {
+        width: auto;
+        height: auto;
+        max-height: 100%;
     }
 
     .gallery-preview {
@@ -68,7 +75,9 @@
     }
 
     .gallery-slide-button {
-        margin-top: 40vh;
+        z-index: 999;
+        position: absolute;
+        top: 50vh;
         max-width: 60px;
         cursor: pointer;
         padding: 10px 10px 0px 10px;
@@ -85,7 +94,7 @@
         }
 
         @media screen and (max-height: 740px) {
-            margin-top: 20vh;
+            top: 20vh;
         }
 
         @media screen and (max-width: 720px) {
@@ -95,11 +104,11 @@
     }
 
     .gallery-left-control {
-        float: left;
+        left: 0px;
     }
     
     .gallery-right-control {
-        float: right;
+        right: 0px;
     }
 
     .gallery-name {

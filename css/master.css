@@ -145,6 +145,7 @@
   bottom: 0px;
 }
 #galleryApp .gallery-image-container {
+  text-align: center;
   height: 70vh;
   margin: auto;
   margin-bottom: 20px;
@@ -162,6 +163,11 @@
   #galleryApp .gallery-image-container {
     height: 30vh;
   }
+}
+#galleryApp #gallery-image {
+  width: auto;
+  height: auto;
+  max-height: 100%;
 }
 #galleryApp .gallery-preview {
   height: 120px;
@@ -196,7 +202,9 @@
   max-height: 250px;
 }
 #galleryApp .gallery-slide-button {
-  margin-top: 40vh;
+  z-index: 999;
+  position: absolute;
+  top: 50vh;
   max-width: 60px;
   cursor: pointer;
   padding: 10px 10px 0px 10px;
@@ -212,7 +220,7 @@
 }
 @media screen and (max-height: 740px) {
   #galleryApp .gallery-slide-button {
-    margin-top: 20vh;
+    top: 20vh;
   }
 }
 @media screen and (max-width: 720px) {
@@ -222,10 +230,10 @@
   }
 }
 #galleryApp .gallery-left-control {
-  float: left;
+  left: 0px;
 }
 #galleryApp .gallery-right-control {
-  float: right;
+  right: 0px;
 }
 #galleryApp .gallery-name {
   padding: 0px 5px;
