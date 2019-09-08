@@ -117,7 +117,7 @@ const galleryApp = new Vue({
 
             return '';
         },
-
+        
         itemClick: function(id) {
             let clicked = this.gallery.items[id];
             this.gallery.items = this.getOrderedItems();

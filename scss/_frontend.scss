@@ -62,17 +62,50 @@
 
     .selected-preview {
         border: 3px solid #1984e9;
-    }
+    } 
 
     .special-gallery-item {
         margin: 5px;
+        position: relative;
         cursor: pointer;
         display: inline-block;
 
         img {
             max-height: 250px;
         }
+
+        .text-overlay { 
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .5s ease;
+            background:rgb(0,0,0, 0.7);
+            text-transform: uppercase;
+
+            &:hover{
+                opacity: 1;
+            }
+
+            h3{
+                color: rgb(255, 255, 255);
+                font-family: raleway, sans-serif;
+                font-size: 20px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+        }
     }
+
 
     .gallery-slide-button {
         z-index: 999;

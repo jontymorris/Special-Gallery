@@ -1,8 +1,11 @@
 <div id="galleryApp">
 
     <div class="special-gallery">
-        <div class="special-gallery-item" v-for="item in items">
-            <img :src="getItemThumbnail(item)" v-on:click="itemClick(item)">
+        <div class="special-gallery-item" v-for="item in items" v-on:click="itemClick(item)">
+            <img :src="getItemThumbnail(item)">
+            <div class="text-overlay">
+                <h3>{{item.name}}</h3>
+            </div>
         </div>
     </div>
 
