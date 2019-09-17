@@ -43,12 +43,11 @@ function gallery_embed($atts) {
     wp_enqueue_script( 'gallery-frontend' );
 
     ?>
-        <!-- Loading script -->
         <script>
-            window.addEventListener('load', function() {
+            window.onload = function () {
                 galleryApp.imageUrls = JSON.parse('<?php echo json_encode( $image_urls ) ?>');
                 galleryApp.items = JSON.parse('<?php echo json_encode( $gallery->items ); ?>');
-            });
+            };
         </script>
     <?php
 
