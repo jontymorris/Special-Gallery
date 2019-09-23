@@ -2,7 +2,7 @@
 
 function gallery_register_scripts() {
     // styles
-    wp_enqueue_style( 'gallery-css', plugins_url( 'special-gallery/css/master.css' ) ); 
+    wp_enqueue_style( 'gallery-css', plugins_url( 'Special-Gallery/css/master.css' ) ); 
 
     // scripts
     wp_register_script( 'web-animations', 'https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js', array(), null, true );
