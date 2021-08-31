@@ -18,15 +18,19 @@ function gallery_embed($atts) {
     $gallery = $galleries[$atts['id']];
 
     // check the gallery has items
-    if ( !array_key_exists( 'items', $gallery) ) {
+    if ( !array_key_exists( 'items', (array) $gallery) ) {
         return '';
     }
 
     // retrive the thumbnails
     $image_urls = array();
-    foreach ($gallery->items as $item) {
+    foreach ($gallery->items as &$item) {
+        
+        $item->name = rawurldecode($item->name);
+        $item->blurb = rawurldecode($item->blurb);
+
         // does the item have any images?
-        if ( !array_key_exists( 'images', $item ) ) {
+        if ( !array_key_exists( 'images', (array) $item ) ) {
             continue;
         }
 

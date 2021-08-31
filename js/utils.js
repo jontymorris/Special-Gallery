@@ -9,7 +9,16 @@ function fetchGalleries() {
 
         jQuery.post(ajaxurl, data, function(response) {
             if (response.success) {
-                resolve( JSON.parse(response.data) );
+                let galleries = JSON.parse(response.data);
+
+                galleries.forEach((gallery) =>{
+                    
+                    gallery.items.forEach((element) => {
+                        element.name = unescape(element.name);
+                        element.blurb = unescape(element.blurb);
+                    });
+                });
+                resolve( galleries );
             }
 
             reject('Failed to retrive galleries');
@@ -44,10 +53,18 @@ function fetchGallery(id) {
  */
 function saveGalleries(galleries) {
     return new Promise(function(resolve, reject) {
+
         let data = {
             'action': 'save_galleries',
             'galleries': galleries
         };
+
+        galleries.forEach((gallery) =>{
+            gallery.items.forEach((element) => {
+                element.name = escape(element.name);
+                element.blurb = escape(element.blurb);
+            });
+        });
 
         jQuery.post(ajaxurl, data, function(response) {
             if (response.success) {
