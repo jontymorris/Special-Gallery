@@ -1,4 +1,29 @@
 /**
+ * Replace unsafe chars with escaped HTML
+ */
+
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+}
+
+/**
+ * Replace escaped HTML with raw chars
+ */
+function unescapeHtml(safe) {
+    return safe
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#039;/g, "'");
+}
+
+/**
  * Retrive the galleries
  */
 function fetchGalleries() {
@@ -11,13 +36,15 @@ function fetchGalleries() {
             if (response.success) {
                 let galleries = JSON.parse(response.data);
 
-                galleries.forEach((gallery) =>{
-                    
-                    gallery.items.forEach((element) => {
-                        element.name = unescape(element.name);
-                        element.blurb = unescape(element.blurb);
+                galleries.forEach(gallery => {
+                    gallery.title = unescapeHtml(gallery.title);
+                    if (!gallery.items) return;
+                    gallery.items.forEach(item => {
+                        item.name = unescapeHtml(item.name);
+                        item.blurb = unescapeHtml(item.blurb);
                     });
                 });
+
                 resolve( galleries );
             }
 
@@ -54,24 +81,32 @@ function fetchGallery(id) {
 function saveGalleries(galleries) {
     return new Promise(function(resolve, reject) {
 
-        let data = {
-            'action': 'save_galleries',
-            'galleries': galleries
-        };
+        let g = JSON.parse(JSON.stringify(galleries));
 
-        galleries.forEach((gallery) =>{
-            gallery.items.forEach((element) => {
-                element.name = escape(element.name);
-                element.blurb = escape(element.blurb);
+        g.forEach(gallery => {
+            gallery.title = escapeHtml(gallery.title);
+            gallery.items.forEach(item => {
+                item.name = escapeHtml(item.name);
+                item.blurb = escapeHtml(item.blurb);
             });
         });
 
-        jQuery.post(ajaxurl, data, function(response) {
-            if (response.success) {
-                resolve('Saved galleries successfully');
-            }
+        let data = {
+            "action": "save_galleries",
+            "galleries": g
+        }
 
-            reject('Failed to save galleries');
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            dataType: 'json',
+            data: data, 
+            success: function() {
+                resolve('Saved galleries successfully');
+            },
+            error: function() {
+                reject('Failed to save galleries');
+            }
         });
     });
 }
