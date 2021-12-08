@@ -64,7 +64,7 @@ const galleryApp = new Vue({
             if (!this.gallery.items) {
                 this.gallery.items = [];
             }
-
+            
             this.gallery.items = this.getOrderedItems();
 
             saveGallery(this.gallery, this.id).then(function(success) {

@@ -18,15 +18,16 @@ function gallery_embed($atts) {
     $gallery = $galleries[$atts['id']];
 
     // check the gallery has items
-    if ( !array_key_exists( 'items', $gallery) ) {
+    if ( !array_key_exists( 'items', (array) $gallery) ) {
         return '';
     }
 
     // retrive the thumbnails
     $image_urls = array();
-    foreach ($gallery->items as $item) {
+    foreach ($gallery->items as &$item) {
+
         // does the item have any images?
-        if ( !array_key_exists( 'images', $item ) ) {
+        if ( !array_key_exists( 'images', (array) $item ) ) {
             continue;
         }
 
@@ -44,9 +45,25 @@ function gallery_embed($atts) {
 
     ?>
         <script>
+            function unescapeHtml(safe) {
+                return safe
+                    .replace(/&amp;/g, "&")
+                    .replace(/&lt;/g, "<")
+                    .replace(/&gt;/g, ">")
+                    .replace(/&quot;/g, "\"")
+                    .replace(/&#039;/g, "'");
+            }
+
             window.onload = function () {
+                var items = <?php echo json_encode( $gallery->items ); ?>
+
+                items.forEach(item => {
+                    if (item.name) item.name = unescapeHtml(item.name);
+                    if (item.blurb) item.blurb = unescapeHtml(item.blurb);
+                })
+
                 galleryApp.imageUrls = <?php echo json_encode( $image_urls ) ?>;
-                galleryApp.items = <?php echo json_encode( $gallery->items ); ?>;
+                galleryApp.items = items;
             };
         </script>
     <?php
