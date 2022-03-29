@@ -8,7 +8,7 @@ function gallery_register_scripts() {
     wp_register_script( 'web-animations', 'https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js', array(), null, true );
     wp_register_script( 'hammer', 'https://unpkg.com/hammerjs@2.0.8/hammer.min.js', array( ), null, true );
     wp_register_script( 'muuri', 'https://unpkg.com/muuri@0.7.1/dist/muuri.min.js', array( 'web-animations', 'hammer' ), null, true );
-    wp_register_script( 'vue', 'https://cdn.jsdelivr.net/npm/vue', array(), null, true );
+    wp_register_script( 'vue', 'https://v2.vuejs.org/js/vue.min.js', array(), null, true );
     
     wp_register_script( 'gallery-utils', plugins_url( '/js/utils.js' , __FILE__ ), array( 'jquery' ), null, true );
     wp_register_script( 'galleries', plugins_url( '/js/galleries.js' , __FILE__ ), array( 'vue', 'jquery', 'gallery-utils' ), null, true );
