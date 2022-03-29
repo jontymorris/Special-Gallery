@@ -84,10 +84,10 @@ function saveGalleries(galleries) {
         let g = JSON.parse(JSON.stringify(galleries));
 
         g.forEach(gallery => {
-            gallery.title = escapeHtml(gallery.title);
+            gallery.title = escapeHtml(gallery.title || "");
             gallery.items.forEach(item => {
-                item.name = escapeHtml(item.name);
-                item.blurb = escapeHtml(item.blurb);
+                item.name = escapeHtml(item.name || "");
+                item.blurb = escapeHtml(item.blurb || "");
             });
         });
 
