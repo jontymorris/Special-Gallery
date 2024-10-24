@@ -9,36 +9,21 @@ const galleryApp = new Vue({
     },
     created() {
         // load cached data
-        if (isItemInStorage('imageUrls')) {
-            this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
-        }
+        this.imageUrls = getImageUrls();
 
+        // Get the gallery ID from the URL
         let url = new URL(window.location.href);
         this.id = url.searchParams.get('gallery');
 
         this.shortcode = `[special-gallery id=${this.id}]`;
 
-        // retrive the gallery items
+        // retrieve the gallery items
         fetchGallery(this.id).then(function(gallery) {
             galleryApp.gallery = gallery;
             galleryApp.refreshGrid();
             
-            // retrive the thumbnails
             if (gallery.items) {
-                gallery.items.forEach(function(item, index) {
-                    if (item.images) {
-                        item.images.forEach(function(id) {
-                            if (!(id in galleryApp.imageUrls)) {
-                                getImageSource(id).then(function(source) {
-                                    galleryApp.imageUrls[id] = source;
-                                    window.localStorage.setItem('imageUrls', JSON.stringify(galleryApp.imageUrls));
-    
-                                    galleryApp.refreshGrid();
-                                });
-                            }
-                        });
-                    }
-                });
+                loadGalleryImages(gallery);
             }
         }, function(error) {
             console.error(error);

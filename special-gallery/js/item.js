@@ -2,20 +2,15 @@ const itemApp = new Vue({
     el: '#galleryApp',
     data: {
         imageUrls: {},
-
         id: 0,
         gallery: null,
         selected: null,
-
         grid: null,
-
         isChanged: false
     },
     created() {
         // load cached data
-        if (isItemInStorage('imageUrls')) {
-            this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
-        }
+        this.imageUrls = getImageUrls();
 
         let url = new URL(window.location.href);
         this.id = url.searchParams.get('gallery');
@@ -45,16 +40,7 @@ const itemApp = new Vue({
                 itemApp.selected = itemApp.gallery.items[0];
             }
 
-            // retrive the thumbnails
-            if (itemApp.selected.images) {
-                itemApp.selected.images.forEach(function(image) {
-                    getImageSource(image).then(function(source) {
-                        itemApp.imageUrls[image] = source;
-                        window.localStorage.setItem('imageUrls', JSON.stringify(itemApp.imageUrls));
-                        itemApp.refreshGrid();
-                    });
-                });
-            }
+            loadItemImages(itemApp.selected);
         }, function(error) {
             console.error(error);
         });
