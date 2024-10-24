@@ -1,36 +1,56 @@
-# Special Gallery
-<img src="./docs/gallery_view.png" alt="gallery" width="316">
-<img src="./docs/gallery_selected.png" alt="gallery_selected" width="300">
+# Special Gallery Plugin
 
+<img src="./docs/gallery_view.png" alt="Gallery View" width="316">
+<img src="./docs/gallery_selected.png" alt="Selected Gallery Item" width="300">
 
-## What is this?
-A simple gallery plugin for Wordpress. It enables you to manage multiple galleries and insert them into your website. Each gallery contains an array of items, that display in a grid, but expand into a unique slideshow when clicked.
+## Overview
+A simple yet powerful gallery plugin for WordPress. It allows you to manage multiple image galleries and seamlessly integrate them into your website. Each gallery presents items in a grid layout, and when clicked, these items expand into a unique slideshow view.
 
+## Features
+- Create and manage multiple galleries.
+- Responsive grid layout.
+- Expandable slideshow for gallery items.
+- Easy integration with WordPress.
 
-## How do I setup the plugin?
-- Install the Elementor plugin.
-- Clone the source from Github.
-- Inside the repository copy the `special-gallery` folder into `wp-plugins` within Wordpress's files.
-- Create a `data` folder in `special-gallery`.
-- Then, create a `galleries.json` file in `data` that contains `[]`.
-- Activate the plugin through Wordpress.
+## Installation Guide
 
-After you have activated the plugin, click on 'Dashboard'. There will be a new menu option called 'Special Gallery'.
-> **Note:** Don't embed multiple galleries on the same page. This will mess up the JavaScript causing the galleries to not show properly.
+### Requirements
+- **WordPress**
+- **Elementor Plugin** (for drag-and-drop functionality)
 
+### Step-by-Step Installation
+1. **Install the Elementor Plugin** if you haven't already.
+2. **Clone the repository** from GitHub:
+   ```bash
+   git clone https://github.com/jontymorris/Special-Gallery.git
+   ```
+3. **Copy the Plugin**: Move the `special-gallery` folder into your WordPress `wp-content/plugins` directory.
+4. **Activate the Plugin**:
+   - Go to your WordPress Dashboard.
+   - Navigate to **Plugins** and activate the **Special Gallery** plugin.
+   
+After activation, a new menu option called **Special Gallery** will appear in the WordPress Dashboard.
 
-## Setup Development Environment
+> **Important:** Do not embed multiple galleries on the same page as this may cause JavaScript issues, preventing galleries from displaying properly.
 
-### Pre-requisites
-For a development environment to get setup, the atmosphere must be primed.
-Before running the plugin, you must say "yeah, this gallery is special".
+## Development Setup
 
-- docker
+### Prerequisites
+Before setting up your development environment, make sure you have the following installed:
 
-#### Get started
+- **Docker**
 
-```bash
-docker compose up -f development/docker-compose.yml up
-```
+### Setting Up the Development Environment
+1. **Clone the Repository**:
+   ```bash
+   git clone <repository-url>
+   ```
+2. **Start the Development Environment** using Docker Compose:
+   ```bash
+   docker-compose -f development/docker-compose.yml up
+   ```
+3. **Access WordPress**:
+   - Once the containers are running, open your browser and navigate to: `http://localhost:80`
+   - You will need to enable the **Special Gallery** plugin from the WordPress plugins page.
 
-admin:admin
+> **Note**: You must activate the plugin in WordPress before you can begin testing and development.
