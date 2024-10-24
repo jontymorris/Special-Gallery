@@ -22,6 +22,10 @@ function gallery_get_galleries()
 
     if (file_exists($path)) {
         $data = file_get_contents($path);
+        if ($data === false) {
+            wp_send_json_error('Failed to read galleries file');
+            return;
+        }
         wp_send_json_success($data);
     } else {
         wp_send_json_success('[]');
