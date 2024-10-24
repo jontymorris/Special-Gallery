@@ -58,9 +58,9 @@ function saveGalleries(galleries) {
             success: function() {
                 resolve('Saved galleries successfully');
             },
-            // error: function() {
-            //     reject('Failed to save galleries');
-            // }
+            error: function() {
+                reject('Failed to save galleries');
+            }
         });
     });
 }
