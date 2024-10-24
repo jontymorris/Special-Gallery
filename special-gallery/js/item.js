@@ -2,26 +2,21 @@ const itemApp = new Vue({
     el: '#galleryApp',
     data: {
         imageUrls: {},
-
         id: 0,
         gallery: null,
         selected: null,
-
         grid: null,
-
         isChanged: false
     },
     created() {
         // load cached data
-        if (isItemInStorage('imageUrls')) {
-            this.imageUrls = JSON.parse(window.localStorage.getItem('imageUrls'));
-        }
+        this.imageUrls = getImageUrls();
 
         let url = new URL(window.location.href);
         this.id = url.searchParams.get('gallery');
 
         // retrive the gallery items
-        fetchGallery(this.id).then(function(gallery) {
+        fetchGallery(this.id).then(function (gallery) {
             itemApp.gallery = gallery;
 
             if (itemApp.gallery.items) {
@@ -45,25 +40,16 @@ const itemApp = new Vue({
                 itemApp.selected = itemApp.gallery.items[0];
             }
 
-            // retrive the thumbnails
-            if (itemApp.selected.images) {
-                itemApp.selected.images.forEach(function(image) {
-                    getImageSource(image).then(function(source) {
-                        itemApp.imageUrls[image] = source;
-                        window.localStorage.setItem('imageUrls', JSON.stringify(itemApp.imageUrls));
-                        itemApp.refreshGrid();
-                    });
-                });
-            }
-        }, function(error) {
+            loadItemImages(itemApp.selected);
+        }, function (error) {
             console.error(error);
         });
     },
     methods: {
-        refreshGrid: function() {
+        refreshGrid: function () {
             this.$forceUpdate();
 
-            this.$nextTick(function() {
+            this.$nextTick(function () {
                 if (jQuery('.gallery-grid').length == 0) {
                     return;
                 }
@@ -76,26 +62,26 @@ const itemApp = new Vue({
             });
         },
 
-        saveChanges: function() {
+        saveChanges: function () {
             if (!this.selected.images) {
                 this.selected.images = [];
             }
 
             this.selected.images = this.getOrderedImages();
 
-            saveGallery(this.gallery, this.id).then(function(resolve) {
+            saveGallery(this.gallery, this.id).then(function (resolve) {
                 window.location.reload();
             });
         },
 
-        getOrderedImages: function() {
+        getOrderedImages: function () {
             if (!this.grid) {
                 return [];
             }
 
             let orderedImages = [];
 
-            this.grid.getItems().forEach(function(element) {
+            this.grid.getItems().forEach(function (element) {
                 let elementId = parseInt(element.getElement().getAttribute('gallery-id'));
                 let image = itemApp.selected.images[elementId]
 
@@ -111,8 +97,8 @@ const itemApp = new Vue({
 
             return orderedImages;
         },
-        
-        getItemThumbnail: function(item) {
+
+        getItemThumbnail: function (item) {
             if (item.images & item.images.length > 0) {
                 let id = item.images[0];
                 if (id in this.imageUrls) {
@@ -123,11 +109,11 @@ const itemApp = new Vue({
             return '';
         },
 
-        newImage: function() {
+        newImage: function () {
             pickImage(this.addImage);
         },
 
-        addImage: function(id) {
+        addImage: function (id) {
             this.isChanged = true;
 
             if (!itemApp.selected.images) {
@@ -138,13 +124,13 @@ const itemApp = new Vue({
             if (id in this.imageUrls) {
                 this.selected.images = this.getOrderedImages();
                 this.selected.images.push(id);
-                
+
                 this.refreshGrid();
             }
 
             // retrive the image source
             else {
-                getImageSource(id).then(function(source) {
+                getImageSource(id).then(function (source) {
                     itemApp.imageUrls[id] = source;
                     itemApp.selected.images = itemApp.getOrderedImages();
                     itemApp.selected.images.push(id);
@@ -152,27 +138,27 @@ const itemApp = new Vue({
                     window.localStorage.setItem('imageUrls', JSON.stringify(itemApp.imageUrls));
 
                     itemApp.refreshGrid();
-                }, function(reject) {
+                }, function (reject) {
                     console.error(reject);
                 })
             }
         },
-        
-        imageClick: function(image) {
-            
+
+        imageClick: function (image) {
+
         },
 
-        imageDrag: function() {
+        imageDrag: function () {
             this.isChanged = true;
         },
 
-        back: function() {
+        back: function () {
             let url = new URL(window.location.href);
             url.searchParams.delete('item');
             window.location.href = url.href;
         },
 
-        removeImage: function(image) {
+        removeImage: function (image) {
             this.isChanged = true;
 
             this.selected.images = this.getOrderedImages();
@@ -188,13 +174,13 @@ const itemApp = new Vue({
                 this.saveChanges();
             }
         },
-        
-        removeItem: function() {
+
+        removeItem: function () {
             let index = this.gallery.items.indexOf(this.selected);
             if (index > -1) {
                 this.gallery.items.splice(index, 1);
 
-                saveGallery(this.gallery, this.id).then(function(success) {
+                saveGallery(this.gallery, this.id).then(function (success) {
                     let url = new URL(window.location.href);
                     url.searchParams.delete('item');
                     window.location.href = url.href;

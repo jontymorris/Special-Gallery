@@ -15,6 +15,34 @@ function gallery_get_image()
 
 add_action('wp_ajax_get_image', 'gallery_get_image');
 
+// get multiple images at once
+function gallery_get_multiple_images() {
+    // Ensure we have an array of IDs
+    $ids = isset($_POST['ids']) ? json_decode(stripslashes($_POST['ids']), true) : [];
+    
+    if (!is_array($ids)) {
+        wp_send_json_error('Invalid input format');
+        return;
+    }
+
+    $results = [];
+    foreach ($ids as $id) {
+        $id = absint($id);
+        $source = wp_get_attachment_image_src($id, 'thumbnail');
+        if ($source) {
+            $results[$id] = $source[0]; // Just store the URL, not the full array
+        }
+    }
+
+    if (!empty($results)) {
+        wp_send_json_success($results);
+    } else {
+        wp_send_json_error('No images found');
+    }
+}
+
+add_action('wp_ajax_get_multiple_images', 'gallery_get_multiple_images');
+
 // returns the galleries
 function gallery_get_galleries()
 {
