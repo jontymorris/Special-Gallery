@@ -2,12 +2,9 @@ const galleryApp = new Vue({
     el: '#galleryApp',
     data: {
         imageUrls: {},
-
         id: 0,
         gallery: null,
-        
         grid: null,
-
         isChanged: false
     },
     created() {
