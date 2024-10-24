@@ -48,7 +48,7 @@ function gallery_embed($atts)
         <!-- Loading script -->
         <script>
             window.addEventListener('load', function() {
-                galleryApp.imageUrls = JSON.parse('<?php echo json_encode( $image_urls ) ?>') || {};
+                galleryApp.imageUrls = JSON.parse('<?php echo json_encode( $image_urls ) ?>');
                 galleryApp.items = JSON.parse('<?php echo json_encode( $gallery->items ); ?>');
             });
         </script>

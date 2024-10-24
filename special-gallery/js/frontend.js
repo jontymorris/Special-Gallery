@@ -8,54 +8,54 @@ const galleryApp = new Vue({
         currentImage: ''
     },
     methods: {
-        itemClick: function(item) {
+        itemClick: function (item) {
             if (item.images) {
                 this.selected = item;
 
-                this.$nextTick(function() {
+                this.$nextTick(function () {
                     this.updateImage();
                 });
             }
         },
 
-        close: function() {
+        close: function () {
             this.selected = null;
             this.slideIndex = 0;
         },
 
-        lastSlide: function() {
+        lastSlide: function () {
             this.slideIndex--;
             this.checkIndex();
         },
 
-        nextSlide: function() {
+        nextSlide: function () {
             this.slideIndex++;
             this.checkIndex();
         },
 
-        previewClick: function(index) {
+        previewClick: function (index) {
             this.slideIndex = index;
             this.checkIndex();
         },
 
-        centerPreview: function() {
+        centerPreview: function () {
             let images = jQuery('.gallery-preview img');
             let element = images[this.slideIndex];
-            
+
             let position = 0;
-            for (let i=0; i<this.slideIndex; i++) {
+            for (let i = 0; i < this.slideIndex; i++) {
                 position += jQuery(images[i]).outerWidth();
                 position += 20;
             }
 
             let halfWindowWidth = jQuery(window).width() / 2;
-            
-            if (position + jQuery(element).outerWidth()/2 < halfWindowWidth) {
+
+            if (position + jQuery(element).outerWidth() / 2 < halfWindowWidth) {
                 jQuery('.gallery-preview').animate({ 'margin-left': '0px' });
                 return;
             };
 
-            position += jQuery(element).outerWidth()/2; 
+            position += jQuery(element).outerWidth() / 2;
             position -= halfWindowWidth;
 
             position = -position;
@@ -64,12 +64,12 @@ const galleryApp = new Vue({
             jQuery('.gallery-preview').animate({ 'margin-left': position });
         },
 
-        updateImage: function() {
+        updateImage: function () {
             let imageUrl = this.imageUrls[this.selected.images[this.slideIndex]];
             jQuery('#gallery-image').attr('src', imageUrl);
         },
 
-        checkIndex: function() {
+        checkIndex: function () {
             if (!this.selected) {
                 return;
             }
@@ -81,7 +81,7 @@ const galleryApp = new Vue({
             }
 
             else if (this.slideIndex < 0) {
-                this.slideIndex = count-1;
+                this.slideIndex = count - 1;
             }
 
             else if (this.slideIndex >= count) {
@@ -92,7 +92,7 @@ const galleryApp = new Vue({
             this.centerPreview();
         },
 
-        getItemThumbnail: function(item) {
+        getItemThumbnail: function (item) {
             if (item.images && item.images.length > 0) {
                 let id = item.images[0];
 
@@ -106,8 +106,8 @@ const galleryApp = new Vue({
     }
 });
 
-window.addEventListener('load', function() {
-    jQuery(document).keyup(function(event) {
+window.addEventListener('load', function () {
+    jQuery(document).keyup(function (event) {
         if (event.key === 'Escape') {
             galleryApp.close();
         }

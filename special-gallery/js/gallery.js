@@ -18,22 +18,22 @@ const galleryApp = new Vue({
         this.shortcode = `[special-gallery id=${this.id}]`;
 
         // retrieve the gallery items
-        fetchGallery(this.id).then(function(gallery) {
+        fetchGallery(this.id).then(function (gallery) {
             galleryApp.gallery = gallery;
             galleryApp.refreshGrid();
-            
+
             if (gallery.items) {
                 loadGalleryImages(gallery);
             }
-        }, function(error) {
+        }, function (error) {
             console.error(error);
         });
     },
     methods: {
-        refreshGrid: function() {
+        refreshGrid: function () {
             this.$forceUpdate();
 
-            this.$nextTick(function() {
+            this.$nextTick(function () {
                 galleryApp.grid = new Muuri('.gallery-grid', {
                     'dragEnabled': true
                 });
@@ -42,26 +42,26 @@ const galleryApp = new Vue({
             });
         },
 
-        saveChanges: function() {
+        saveChanges: function () {
             if (!this.gallery.items) {
                 this.gallery.items = [];
             }
-            
+
             this.gallery.items = this.getOrderedItems();
 
-            saveGallery(this.gallery, this.id).then(function(success) {
+            saveGallery(this.gallery, this.id).then(function (success) {
                 window.location.reload();
             });
         },
 
-        getOrderedItems: function() {
+        getOrderedItems: function () {
             if (!this.grid) {
                 return [];
             }
 
             let orderedItems = [];
 
-            this.grid.getItems().forEach(function(element) {
+            this.grid.getItems().forEach(function (element) {
                 let elementId = parseInt(element.getElement().getAttribute('gallery-id'));
                 let item = galleryApp.gallery.items[elementId];
 
@@ -69,11 +69,11 @@ const galleryApp = new Vue({
                     orderedItems.push(item);
                 }
             });
-            
+
             return orderedItems;
         },
 
-        newItem: function() {
+        newItem: function () {
             this.isChanged = true;
 
             this.gallery.items = this.getOrderedItems();
@@ -88,7 +88,7 @@ const galleryApp = new Vue({
             this.refreshGrid();
         },
 
-        getItemThumbnail: function(item) {
+        getItemThumbnail: function (item) {
             if (item.images && item.images.length > 0) {
                 let id = item.images[0];
 
@@ -99,40 +99,40 @@ const galleryApp = new Vue({
 
             return '';
         },
-        
-        itemClick: function(id) {
+
+        itemClick: function (id) {
             let clicked = this.gallery.items[id];
             this.gallery.items = this.getOrderedItems();
 
-            saveGallery(this.gallery, this.id).then(function(success) {
+            saveGallery(this.gallery, this.id).then(function (success) {
                 let url = new URL(window.location.href);
                 url.searchParams.set('item', galleryApp.gallery.items.indexOf(clicked));
                 window.location.href = url.href;
             });
         },
 
-        itemDrag: function() {
+        itemDrag: function () {
             this.isChanged = true;
         },
 
-        back: function() {
+        back: function () {
             let url = new URL(window.location.href);
             url.searchParams.delete('gallery');
             window.location.href = url.href;
         },
 
-        removeGallery: function() {
-            fetchGalleries().then(function(galleries) {
+        removeGallery: function () {
+            fetchGalleries().then(function (galleries) {
                 galleries.splice(galleryApp.id, 1);
-                saveGalleries(galleries).then(function(success) {
+                saveGalleries(galleries).then(function (success) {
                     let url = new URL(window.location.href);
                     url.searchParams.delete('gallery');
                     window.location.href = url.href;
-                }, function(error) {
+                }, function (error) {
                     console.error(error);
                 });
-            }, function(error) {
-                console.error(error);  
+            }, function (error) {
+                console.error(error);
             });
         }
     }
