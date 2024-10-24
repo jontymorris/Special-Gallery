@@ -18,7 +18,7 @@ A simple yet powerful gallery plugin for WordPress. It allows you to manage mult
 - **WordPress**
 - **Elementor Plugin** (for drag-and-drop functionality)
 
-### Step-by-Step Installation
+### Installation
 1. **Install the Elementor Plugin** if you haven't already.
 2. **Clone the repository** from GitHub:
    ```bash
@@ -33,6 +33,12 @@ After activation, a new menu option called **Special Gallery** will appear in th
 
 > **Important:** Do not embed multiple galleries on the same page as this may cause JavaScript issues, preventing galleries from displaying properly.
 
+## Add to page
+Navigate to the page you want to add the gallery and add the shortcode link shown in the admin panel.
+1. Open with Elementor
+2. Create a Shortcode widget
+3. Paste in your code, e.g. `[special-gallery id=0]`
+
 ## Development Setup
 
 ### Prerequisites
@@ -41,15 +47,11 @@ Before setting up your development environment, make sure you have the following
 - **Docker**
 
 ### Setting Up the Development Environment
-1. **Clone the Repository**:
-   ```bash
-   git clone <repository-url>
-   ```
-2. **Start the Development Environment** using Docker Compose:
+1. **Start the Development Environment** using Docker Compose:
    ```bash
    docker-compose -f development/docker-compose.yml up
    ```
-3. **Access WordPress**:
+2. **Access WordPress**:
    - Once the containers are running, open your browser and navigate to: `http://localhost:80`
    - You will need to enable the **Special Gallery** plugin from the WordPress plugins page.
 

@@ -45,28 +45,13 @@ function gallery_embed($atts)
     wp_enqueue_script('gallery-frontend');
 
     ?>
-    <script>
-        function unescapeHtml(safe) {
-            return safe
-                .replace(/&amp;/g, "&")
-                .replace(/&lt;/g, "<")
-                .replace(/&gt;/g, ">")
-                .replace(/&quot;/g, "\"")
-                .replace(/&#039;/g, "'");
-        }
-
-        window.onload = function () {
-            var items = <?php echo json_encode($gallery->items); ?>
-
-            items.forEach(item => {
-                if (item.name) item.name = unescapeHtml(item.name);
-                if (item.blurb) item.blurb = unescapeHtml(item.blurb);
-            })
-
-            galleryApp.imageUrls = <?php echo json_encode($image_urls) ?>;
-            galleryApp.items = items;
-        };
-    </script>
+        <!-- Loading script -->
+        <script>
+            window.addEventListener('load', function() {
+                galleryApp.imageUrls = JSON.parse('<?php echo json_encode( $image_urls ) ?>');
+                galleryApp.items = JSON.parse('<?php echo json_encode( $gallery->items ); ?>');
+            });
+        </script>
     <?php
 
     // return the shortcode content
